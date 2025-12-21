@@ -1,0 +1,99 @@
+{
+  "nm-car": [
+    {
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Nipple"
+      }
+    },
+    {
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Live"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Signal"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Battery"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Gamepad"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Keyboard"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Slider"
+      }
+    }
+  ],
+  "nm-car-test": [
+    {
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Nipple"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Signal"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Battery"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Gamepad"
+      }
+    },
+    {
+      "position": "top",
+      "config": {},
+      "info": {
+        "origin": "built-in",
+        "source": "Slider"
+      }
+    }
+  ]
+}

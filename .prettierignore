@@ -1,0 +1,4 @@
+dist
+src-tauri
+src/typings/auto-import.d.ts
+src/typings/components.d.ts

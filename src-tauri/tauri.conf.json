@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "mainBinaryName": "bullm-remote",
+  "productName": "牛明远控",
+  "version": "1.0.0",
+  "identifier": "cn.bullm.car",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1520",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "牛明 - 远控",
+        "width": 1000,
+        "height": 600,
+        "dragDropEnabled": false,
+        "decorations": false,
+        "shadow": true,
+        "backgroundColor": "#000000",
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/64x64.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "Utility",
+    "copyright": "© 2025 牛明工作室 / yy祝",
+    "shortDescription": "控制你的小车",
+    "longDescription": "致力打造一个通用的远程遥控平台",
+    "windows": {
+      "wix": {
+        "language": "zh-CN"
+      },
+      "nsis": {
+        "languages": ["SimpChinese", "English"],
+        "displayLanguageSelector": false,
+        "installerIcon": "./icons/icon.ico"
+      }
+    }
+  }
+}

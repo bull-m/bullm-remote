@@ -1,0 +1,85 @@
+/**
+ * 修改一些组件的样式
+ */
+.van-popup.van-popup {
+  --van-popup-background: var(--popup-background);
+  --van-collapse-item-content-background: transparent;
+  backdrop-filter: var(--popup-filter);
+
+  // 通用弹窗
+  &.z-popup .van-cell {
+    --van-cell-background: transparent;
+  }
+  // 设置弹窗
+  &.setup-popup {
+    .van-cell {
+      --van-cell-background: var(--popup-content-background);
+    }
+    // 组添加背景, 输入框去除背景
+    .van-cell-group {
+      --van-cell-group-background: var(--popup-content-background);
+
+      .van-cell {
+        --van-cell-background: transparent;
+      }
+    }
+  }
+
+  .van-nav-bar {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    --van-nav-bar-background: var(--popup-nav-bar-background);
+    backdrop-filter: var(--popup-nav-bar-filter);
+  }
+}
+
+.van-tabs__nav--card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.van-floating-panel.van-floating-panel {
+  position: absolute;
+  width: 100%;
+}
+
+.van-floating-panel.van-floating-panel:after {
+  width: 100%;
+}
+
+.van-overlay {
+  transition: all 0.3s;
+}
+
+.van-cell__label.van-cell__label {
+  white-space: pre-wrap;
+}
+
+.van-cell__value.van-cell__value {
+  white-space: pre-wrap;
+  //flex: none;
+}
+
+/*输入框的value*/
+.van-cell__value.van-field__value {
+  flex: 1;
+}
+
+.van-tag {
+  white-space: pre-wrap;
+}
+
+.van-action-sheet {
+  --van-action-sheet-max-height: 77%;
+}
+
+.van-hairline--top-bottom:after {
+  display: none;
+}
+
+.van-button.van-button--normal {
+  --van-button-radius: 10px;
+  --van-button-default-height: 38px;
+}

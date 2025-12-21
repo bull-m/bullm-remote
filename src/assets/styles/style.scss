@@ -1,0 +1,149 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --data-me: 'U2FsdGVkX18KdVjj8xJmajBuZSFc1WXU7HjTZnnjJtYY7bPDufe0wj2u3ohbXvd+cweo3EXASw==';
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  --color-text: #111;
+
+  --top-height: 50px;
+  --side-width: 50px;
+}
+
+:root:root {
+  --van-primary-color-rgb: 46, 139, 87;
+
+  --van-primary-color: #2e8b57;
+  --van-warning-color: #e67e22;
+  --van-danger-color: #c0392b;
+  --van-success-color: #2ecc71;
+
+  /*  默认按钮颜色  */
+  --van-button-default-background: rgba(46, 51, 56, 0.05);
+  --van-button-default-border-color: rgba(46, 51, 56, 0.05);
+
+  --background: #ffffff;
+  --background-active: #f2f2f2;
+  --text: #333333;
+
+  // 弹窗的背景
+  --popup-background: #ffffffa0;
+  --popup-filter: blur(15px);
+  // 弹窗导航栏的背景
+  --popup-nav-bar-background: #ffffffd0;
+  --popup-nav-bar-filter: blur(3px);
+  // 内容的背景
+  --popup-content-background: #f7f8fa40;
+  --popup-content-border: #f7f8fa80;
+
+  /*  通知bar  */
+  --van-notice-bar-background: rgba(var(--van-primary-color-rgb), 0.08);
+  --van-notice-bar-text-color: var(--van-primary-color);
+
+  --van-overlay-background: rgba(0, 0, 0, 0.5);
+
+  --van-active-color: var(--background-active);
+}
+
+.van-theme-dark:root:root {
+  --background: #1c1c1e;
+  --background-active: #232324;
+  --text: #ffffff;
+  --popup-background: #101010e6;
+  --popup-nav-bar-background: #0b0b0bc0;
+  --popup-content-background: #00000056;
+  --popup-content-border: #55555580;
+
+  /*  通知bar  */
+  --van-notice-bar-background: rgba(var(--van-primary-color-rgb), 0.16);
+
+  /*  默认按钮颜色  */
+  --van-button-default-background: rgba(255, 255, 255, 0.08);
+  --van-button-default-border-color: rgba(255, 255, 255, 0.08);
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'SmileySans-Oblique';
+  src: url('https://cdn.yyzhu.vip/font/SmileySans-Oblique/SmileySans-Oblique.ttf.woff2');
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+}
+
+.position-center.position-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+body {
+  user-select: none;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.plugin-btn-text {
+  font-size: 16px;
+  cursor: pointer;
+  /*font-weight: bold;*/
+  /*text-shadow: 0 1px #000, 1px 0 #000, -1px 0 #000, 0 -1px #000;*/
+  color: #eeeeee;
+  text-shadow:
+    -0.6px -0.6px 0 #000,
+    0.6px -0.6px 0 #000,
+    -0.6px 0.6px 0 #000,
+    0.6px 0.6px 0 #000;
+}
+
+.plugin-btn-text.top {
+  padding: 0 13px;
+  //line-height: var(--top-height);
+  display: flex;
+  align-items: center;
+  height: var(--top-height);
+}
+
+.plugin-btn-text.right {
+  padding: 13px 0;
+  display: flex;
+  align-items: center;
+  width: var(--top-height);
+}
+
+.plugin-btn-text:active {
+  color: #ccc;
+}
+
+.icon-shadow {
+  filter: drop-shadow(0 0 2px #00000099);
+}
+
+.icon {
+  display: block;
+}
