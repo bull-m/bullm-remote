@@ -41,7 +41,7 @@
   一个跨平台的代码构建器、集成开发环境。
 - 当然这不是全部，还有许多很棒的，只要看看我们的包文件，就能了解我们用了什么。
 
-# #加入我们 💬
+## 加入我们 💬
 
 我们的文档：[car.bullm.cn](https://car.bullm.cn)  
 欢迎给我们提Issues [bull-m/bullm-remote/issues](https://github.com/bull-m/bullm-remote/issues)  
