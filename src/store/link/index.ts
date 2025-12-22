@@ -160,7 +160,8 @@ export const useStore = defineStore(
       const loading = showLoadingToast({
         message: '正在连接中...',
         duration: 0,
-        forbidClick: true,
+        overlay: true,
+        overlayStyle: {background: 'rgba(0, 0, 0, 0)',}
       })
       if (!linkOption) {
         // mac地址，查询最近的链接
