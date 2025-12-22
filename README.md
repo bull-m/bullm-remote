@@ -10,12 +10,18 @@
   <img src="https://img.shields.io/github/v/release/bull-m/bullm-remote" alt="Bullm Logo">
 </p>
 
-
 - **插件系统**
 - **流畅的FPV画面**
 - **多客户端的支持**(Windows/Android已就绪)
-- **扩展模块支持**
-- ......
+- **支持键盘控制**
+- **支持手柄控制**
+- **支持通过I2C连接扩展模块**
+- **支持多种底盘样式** (麦克纳姆轮、差速转弯)
+- **支持动态定义引脚功能** (PWM、舵机、电平)
+- **支持组合功能** (组合多个引脚实现控制L298N、L9110S等驱动芯片)
+- **支持通过I2C连接0.91寸屏幕显示一些状态**
+- **云台支持**
+- **...**
 
 ## 仓库 🔗
 **他的每一个部分都是开源的！** 你可以尽情的“玩耍”，也非常期待你能贡献你的代码和想法。
@@ -43,8 +49,8 @@
 
 ## 加入我们 💬
 
-我们的文档：[car.bullm.cn](https://car.bullm.cn)  
-欢迎给我们提Issues [bull-m/bullm-remote/issues](https://github.com/bull-m/bullm-remote/issues)  
+文档：[car.bullm.cn](https://car.bullm.cn)  
+提ISSUES [bull-m/bullm-remote/issues](https://github.com/bull-m/bullm-remote/issues)  
 QQ交流群：[920700546](https://qm.qq.com/q/GHi6LZwamk)
 
 ## 如何开发 💻
