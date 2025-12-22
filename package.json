@@ -23,7 +23,8 @@
     "tauri": "tauri",
     "tauri:dev": "npm run tauri dev",
     "tauri:dev:android": "npm run tauri android dev",
-    "tauri:build": "npm run tauri build"
+    "tauri:build": "npm run tauri build",
+    "tauri:build:android": "npm run tauri android build"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.9",
