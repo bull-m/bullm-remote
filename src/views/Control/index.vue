@@ -20,7 +20,7 @@ SPDX-License-Identifier: MIT
       </div>
       <!-- 设置和退出按钮 -->
       <div class="top-right-plugin-list" @mousedown.stop>
-        <Titlebar :close="onClose" />
+        <Titlebar :close="onClose" v-if="!isMobile()" />
         <div
           class="plugin-btn-text top"
           style="font-size: 21px; width: var(--top-height); padding: 0; justify-content: center"
@@ -65,6 +65,7 @@ import { useStoreUi } from '@/store/ui.ts'
 import { KeyboardClear, KeyboardInit } from '@/utils/device/keyboard.ts'
 import { debugAutoOpenSetup } from '@/views/debug.ts'
 import { getCurrentWindow } from '@tauri-apps/api/window'
+import { isMobile } from '@/utils/system/os.ts'
 
 const appWindow = getCurrentWindow()
 
@@ -87,9 +88,11 @@ function onClose() {
 
 onMounted(() => {
   KeyboardInit()
+  ui.addRoute(onBack)
 })
 onUnmounted(() => {
   KeyboardClear()
+  ui.removeRoute(onBack)
 })
 
 if (debugAutoOpenSetup) {

@@ -6,7 +6,7 @@
       justifyContent: justify,
       alignItems: align,
       flexWrap: wrap ? 'wrap' : 'nowrap',
-      gap: gap ? `${gap}px` : '10px',
+      gap: typeof gap !== 'undefined' ? (typeof gap === 'number' ? `${gap}px` : gap) : '10px'
     }">
     <slot></slot>
   </div>
@@ -18,7 +18,7 @@ defineProps<{
   justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'
   align?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch'
   wrap?: boolean
-  gap?: number
+  gap?: number | string
 }>()
 </script>
 

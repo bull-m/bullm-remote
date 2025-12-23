@@ -162,7 +162,7 @@ const editMode = ref(-1)
 
 const showBuiltIn = ref<Record<string, boolean>>({})
 
-const activeNames = ref([] as string[])
+const activeNames = ref(undefined as string | undefined)
 const type_name_map = {
   pwms: 'PWM扩展',
   motor: '8路电机驱动扩展板',

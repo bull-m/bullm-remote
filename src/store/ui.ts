@@ -1,11 +1,7 @@
 import { defineStore } from 'pinia'
 import { store } from '.'
-import { useStorePlugin } from '@/store/plugin.ts'
-import { useStoreWalk } from '@/store/control/walk.ts'
-import { useStoreChassis } from '@/store/modules/chassis.ts'
-import { executePromisesInSequence } from '@/utils'
-import { useStoreDog } from '@/store/link/dog.ts'
-import { useStoreCamera } from '@/store/modules/camera.ts'
+import { getCurrentWebview } from '@tauri-apps/api/webview';
+import { isMobile } from '@/utils/system/os.ts'
 
 export const useStore = defineStore(
   'ui',
@@ -31,6 +27,45 @@ export const useStore = defineStore(
       noOverlay: false, // 是否隐藏mark层
     })
 
+    const routes = ref<(()=>any)[]>([])
+    function addRoute(route: ()=>any) {
+      routes.value.push(route)
+    }
+    function removeRoute(route: ()=>any) {
+      routes.value = routes.value.filter(x => x !== route)
+    }
+
+    // @ts-ignore
+    window._back = ()=>{
+      if (routes.value.length){
+        routes.value.pop()?.()
+      }
+    }
+
+    const zoom = ref(1)
+    watch(
+      zoom,
+      newVal => {
+        if (isMobile()) {
+          // 移动端使用 CSS transform 实现缩放
+          const app = document.getElementById('root')
+          if (app) {
+            app.style.transform = `scale(${newVal})`
+            app.style.transformOrigin = 'top left'
+            app.style.width = `${100 / newVal}%`
+            app.style.height = `${100 / newVal}%`
+          }
+
+        } else {
+          // 桌面端使用 Tauri API
+          getCurrentWebview().setZoom(newVal).catch(err => {
+            console.error('设置缩放失败:', err)
+          })
+        }
+      },
+      { immediate: true }
+    )
+
     function init() {
       return Promise.resolve()
     }
@@ -45,12 +80,16 @@ export const useStore = defineStore(
       clear,
       theme,
       setup,
+      routes,
+      addRoute,
+      removeRoute,
+      zoom
     }
   },
   {
     // 开启持久化
     persist: {
-      pick: ['theme'],
+      pick: ['theme', 'zoom'],
     },
   }
 )

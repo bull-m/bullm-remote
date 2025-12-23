@@ -71,6 +71,10 @@
   --van-button-default-border-color: rgba(255, 255, 255, 0.08);
 }
 
+html{
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
@@ -78,6 +82,37 @@ body {
   height: 100vh;
   width: 100vw;
   position: relative;
+  user-select: none;
+}
+
+// 根容器
+#root{
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  // vue
+  #app {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
+  // 透视容器
+  #perspective-box {
+    perspective: 900px;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1000;
+
+    > * {
+      pointer-events: auto;
+    }
+  }
 }
 
 * {
@@ -100,10 +135,6 @@ body {
   transform: translate(-50%, -50%);
 }
 
-body {
-  user-select: none;
-}
-
 .w-full {
   width: 100%;
 }
@@ -114,11 +145,10 @@ body {
   /*font-weight: bold;*/
   /*text-shadow: 0 1px #000, 1px 0 #000, -1px 0 #000, 0 -1px #000;*/
   color: #eeeeee;
-  text-shadow:
-    -0.6px -0.6px 0 #000,
-    0.6px -0.6px 0 #000,
-    -0.6px 0.6px 0 #000,
-    0.6px 0.6px 0 #000;
+  text-shadow: -0.6px -0.6px 0 #000,
+  0.6px -0.6px 0 #000,
+  -0.6px 0.6px 0 #000,
+  0.6px 0.6px 0 #000;
 }
 
 .plugin-btn-text.top {

@@ -9,7 +9,6 @@ SPDX-License-Identifier: MIT
     title="设置"
     box-id="SetupIndex"
     @open="open"
-    teleport="body"
     style="transition: all 0.5s"
     :overlay-class="ui.setup.noOverlay ? 'no-overlay' : ''">
     <van-cell-group inset title="连接与配置">

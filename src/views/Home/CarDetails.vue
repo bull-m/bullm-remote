@@ -2,7 +2,12 @@
   <div class="car-details">
     <div class="top">
       <div class="left">
-        <div class="head select-btn" @click="emit('back')">< 返回</div>
+        <div v-if="!isMobile()" class="head select-btn" @click="emit('back')">
+          <ZFlex align="center" :gap="5">
+            <IconMdiArrowBack />
+            <div>返回</div>
+          </ZFlex>
+        </div>
         <div style="display: flex; gap: 10px">
           <div class="mode-btn select-btn" @click="isVideoMode = true" :class="{ is: isVideoMode }" style="flex: 1; height: 130px">
             <IconSvgLive />
@@ -69,6 +74,7 @@ import { PromiseType } from '@/typings'
 import { CarInfo, useStoreLink } from '@/store/link'
 import { getCarIcon } from '@/views/Home/utils.ts'
 import { debugAutoLink } from '@/views/debug.ts'
+import { isMobile } from '@/utils/system/os.ts'
 
 const link = useStoreLink()
 type LinkType = PromiseType<ReturnType<typeof link.scan>>
@@ -265,6 +271,8 @@ onMounted(() => {
   height: 100%;
   margin-right: 30px;
   gap: 10px;
+  overflow-y: auto;
+  margin-top: 10px;
 
   .head {
     height: 45px;
@@ -272,6 +280,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     font-size: 17px;
+    flex-shrink: 0;
   }
 
   .mode-btn {
@@ -281,6 +290,7 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 
     .icon {
       width: 60px;
@@ -293,6 +303,7 @@ onMounted(() => {
 
   .links {
     margin-top: 2px;
+    flex-shrink: 0;
 
     .link {
       padding: 0 15px;

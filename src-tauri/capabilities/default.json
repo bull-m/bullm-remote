@@ -18,6 +18,7 @@
     "store:default",
     "dialog:allow-save",
     "fs:default",
-    "fs:write-files"
+    "fs:write-files",
+    "core:webview:allow-set-webview-zoom"
   ]
 }

@@ -11,8 +11,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    IconMdiArrowBack: typeof import('~icons/mdi/arrow-back')['default']
     IconMdiChristmasStar: typeof import('~icons/mdi/christmas-star')['default']
     IconMdiChristmasStarOutline: typeof import('~icons/mdi/christmas-star-outline')['default']
+    IconMdiInformationVariantCircleOutline: typeof import('~icons/mdi/information-variant-circle-outline')['default']
     IconMdiLightbulbOn: typeof import('~icons/mdi/lightbulb-on')['default']
     IconMdiLightbulbOn10: typeof import('~icons/mdi/lightbulb-on10')['default']
     IconMdiRefresh: typeof import('~icons/mdi/refresh')['default']
@@ -27,7 +29,6 @@ declare module 'vue' {
     IconSvgLive: typeof import('~icons/svg/live')['default']
     IconSvgLogo: typeof import('~icons/svg/logo')['default']
     IconSvgRefresh: typeof import('~icons/svg/refresh')['default']
-    IconSvgScan: typeof import('~icons/svg/scan')['default']
     IconSvgSetup: typeof import('~icons/svg/setup')['default']
     IconSvgSignal: typeof import('~icons/svg/signal')['default']
     IconSvgSort: typeof import('~icons/svg/sort')['default']
@@ -53,7 +54,6 @@ declare module 'vue' {
     VanIcon: typeof import('vant/es')['Icon']
     VanList: typeof import('vant/es')['List']
     VanLoading: typeof import('vant/es')['Loading']
-    VanNavBar: typeof import('vant/es')['NavBar']
     VanNoticeBar: typeof import('vant/es')['NoticeBar']
     VanPicker: typeof import('vant/es')['Picker']
     VanPopup: typeof import('vant/es')['Popup']

@@ -46,7 +46,7 @@ export const useStore = defineStore(
       showToast('初始化数据中')
       await executePromisesInSequence([
         useStoreUdp().init,
-        useStoreUi().init, // 初始化运动
+        useStoreUi().init, // 初始化UI
         useStoreWalk().init, // 初始化运动
         useStoreChassis().init, // 初始化底盘
         useStorePZT().init, // 初始化云台

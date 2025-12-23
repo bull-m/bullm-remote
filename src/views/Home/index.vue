@@ -5,22 +5,28 @@ SPDX-License-Identifier: MIT
 -->
 <template>
   <div class="bj-box" data-me="U2FsdGVkX18KdVjj8xJmajBuZSFc1WXU7HjTZnnjJtYY7bPDufe0wj2u3ohbXvd+cweo3EXASw==">
-    <div class="app-region" v-if="!isMobile()" @mousedown="appWindow.startDragging">
-      <div class="logo">
-        <IconSvgLogo />
-        <span class="title">牛明 - 远控</span>
-        <ZTag @mousedown.stop style="margin-left: 15px; cursor: pointer" @click="showUpdate = true">
+    <div class="head" @mousedown="appWindow.startDragging">
+      <div class="head-left">
+        <ZFlex align="center" :gap="5" class="back-btn" v-if="isMobile() && isDetails" @click="backDetails" @mousedown.stop>
+          <IconMdiArrowBack />
+          <div>返回</div>
+        </ZFlex>
+        <ZFlex align="center" :gap="8" class="logo">
+          <IconSvgLogo />
+          <span class="title">牛明 - 远控</span>
+        </ZFlex>
+        <ZTag v-if="!isDetails" @mousedown.stop style="margin-left: 15px; cursor: pointer" @click="showUpdate = true">
           {{ isUpdate ? '有新版本' : '已经是最新版本' }}
         </ZTag>
-        <van-badge @mousedown.stop :content="noticeNum > 0 ? noticeNum : undefined" v-if="noticeNum >= 0">
+        <van-badge @mousedown.stop :content="noticeNum > 0 ? noticeNum : undefined" v-if="!isDetails && noticeNum >= 0">
           <ZTag style="margin-left: 15px; cursor: pointer" @click="showNotice = true">
             {{ noticeNum == 0 ? '公告' : `有未读公告` }}
           </ZTag>
         </van-badge>
       </div>
-      <Titlebar />
+      <Titlebar v-if="!isMobile()" />
     </div>
-    <div class="main" v-if="!isDetails" :class="{ mobile: isMobile() }">
+    <div class="main" v-if="!isDetails">
       <div class="content">
         <div class="list">
           <template v-for="(car, i) in [...car_star, ...car_order]" :key="i">
@@ -88,19 +94,24 @@ SPDX-License-Identifier: MIT
             <IconSvgAdd2 />
             <div class="name">添加链接</div>
           </div>
-          <div class="btn" @click="showScan = true">
-            <IconSvgScan />
-            <div class="name">扫描</div>
-          </div>
-          <div class="btn" @click="showSetup = true">
+          <!--          <div class="btn" @click="showScan = true">-->
+          <!--            <IconSvgScan />-->
+          <!--            <div class="name">扫描</div>-->
+          <!--          </div>-->
+          <div class="btn" @click="showAppSetup = true">
             <IconSvgSetup />
-            <div class="name">设置</div>
+            <div class="name">全局设置</div>
+          </div>
+          <div class="btn" @click="showAppInfo = true">
+            <IconMdiInformationVariantCircleOutline class="icon" />
+            <div class="name">关于</div>
           </div>
         </div>
       </div>
       <!--   是的，我们根据MIT许可证许可，我们允许你进行商用，但是我们希望您在商用或者修改我们软件的时候不要删除我们的名字，谢谢❤️   -->
       <div class="copyright" title="版权所有 © 2025 牛明工作室 / yy祝。保留所有权利。">© 2025 牛明工作室 / yy祝</div>
-      <AppInfoDialog v-model:show="showSetup" />
+      <AppInfoDialog v-model:show="showAppInfo" />
+      <AppSetupDialog v-model:show="showAppSetup" />
     </div>
     <CarDetails class="main" v-else :car="selectedCar!" @setup="setupCar(selectedCar!)" :scan="scan" @back="backDetails" />
 
@@ -123,12 +134,16 @@ import NoticeDialog from '@/views/Home/dialog/NoticeDialog.vue'
 import { isMobile } from '@/utils/system/os.ts'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import Titlebar from '@/components/business/Titlebar.vue'
+import { useStoreUi } from '@/store/ui.ts'
+import AppSetupDialog from '@/views/Home/dialog/AppSetupDialog.vue'
 
 const appWindow = getCurrentWindow()
 
 const link = useStoreLink()
+const ui = useStoreUi()
 
-const showSetup = ref(false)
+const showAppSetup = ref(false)
+const showAppInfo = ref(false)
 const showScan = ref(false)
 const showNotice = ref(false)
 const noticeNum = ref(-1) // 通知数量
@@ -185,7 +200,10 @@ onMounted(() => {
   }))
   onScanCar()
   // 轮询扫描
-  scanInterval = setInterval(scan, 5000)
+  scanInterval = setInterval(() => {
+    if (link.isLink) return // 已经连接了，跳过扫描
+    scan()
+  }, 5000)
 })
 onUnmounted(() => {
   scanInterval && clearInterval(scanInterval)
@@ -290,6 +308,21 @@ if (link.default_mac) {
     isDetails.value = true
   }
 }
+
+watch(
+  isDetails,
+  val => {
+    val ? ui.addRoute(backDetails) : ui.removeRoute(backDetails)
+  },
+  { immediate: true }
+)
+
+watch(
+  () => link.isLink,
+  val => {
+    if (!val) scan() // 断开连接时重新扫描
+  }
+)
 </script>
 
 <style scoped lang="scss">
@@ -303,27 +336,64 @@ if (link.default_mac) {
   transform: scale(1);
 }
 
-.logo {
+.head-left {
   font-size: 23px;
   display: flex;
   align-items: center;
-  opacity: 0.8;
   margin-left: 15px;
 
   .icon {
     display: block;
   }
-
-  .title {
+  .logo {
+    opacity: 0.8;
+    view-transition-name: home-logo;
+    ::view-transition-old(root){
+      opacity: 0;
+    }
+    .title {
+      font-size: 17px;
+      font-weight: bold;
+      line-height: 1;
+      margin-right: 10px;
+    }
+  }
+  .back-btn {
     font-size: 17px;
-    margin-left: 8px;
     font-weight: bold;
     line-height: 1;
-    margin-right: 10px;
+    opacity: 0.7;
+    height: var(--top-height);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    padding-right: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #fff;
+    vertical-align: center;
+    &.fade-enter-active {
+      animation: fadeIn 0.3s;
+    }
+    &.fade-leave-active {
+      animation: fadeIn 0.3s reverse;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        max-width: 0;
+      }
+      to {
+        opacity: 1;
+        max-width: 60px;
+      }
+    }
   }
 }
 
-.app-region {
+.head {
   position: absolute;
   top: 0;
   left: 0;
@@ -345,10 +415,6 @@ if (link.default_mac) {
   max-height: 600px;
   margin: auto;
   padding-top: var(--top-height);
-
-  &.mobile {
-    padding-top: 0;
-  }
 
   .bottom {
     width: 100%;

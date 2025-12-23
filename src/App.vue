@@ -19,7 +19,6 @@ import Home from '@/views/Home/index.vue'
 import '@/utils/device/keyboard.ts'
 import { useStoreUi } from '@/store/ui.ts'
 import Warning from '@/components/business/Warning.vue'
-import Titlebar from '@/components/business/Titlebar.vue'
 
 const Control = defineAsyncComponent(() => import('@/views/Control/index.vue'))
 
@@ -40,26 +39,6 @@ onMounted(() => {
   position: relative;
 }
 
-#app {
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-
-#perspective-box {
-  perspective: 900px;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 1000;
-
-  > * {
-    pointer-events: auto;
-  }
-}
 </style>
 <style lang="scss" scoped>
 .fade-enter-active {

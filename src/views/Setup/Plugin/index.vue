@@ -2,7 +2,7 @@
   <ZPopupSetup :before-close="beforeClose" :reset="reset" title="插件设置" box-id="SetupPlugins">
     <van-notice-bar>配置关联小车保存在本地，小车间配置独立。拖拽进行排序删除</van-notice-bar>
     <van-tabs
-      style="z-index: 999; position: sticky; top: calc(var(--van-nav-bar-height) * -1)"
+      style="z-index: 999; position: sticky; top: calc(var(--nav-bar-height) * -1)"
       v-model:active="activeFilter"
       @change="handleTabChange">
       <van-tab v-for="filter in filters" :key="filter.value" :title="filter.label" :name="filter.value" />

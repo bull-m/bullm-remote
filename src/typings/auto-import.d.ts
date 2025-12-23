@@ -8,7 +8,7 @@ export {}
 declare global {
   const EffectScope: typeof import('vue').EffectScope
   const closeDialog: typeof import('vant/es').closeDialog
-  const closeToast: (typeof import('vant/es'))['closeToast']
+  const closeToast: typeof import('vant/es').closeToast
   const computed: typeof import('vue').computed
   const createApp: typeof import('vue').createApp
   const customRef: typeof import('vue').customRef
