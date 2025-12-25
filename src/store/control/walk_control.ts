@@ -102,10 +102,14 @@ export const useWalkControl = () => {
         let mode = 0
 
         let arr = Array.isArray(data.value) ? data.value : [data.value]
+        // 由于1字节和2字节的数据使用的多，所有给一个独立的控制指令
         if (arr.length === 1) {
           mode = CONTROL.BYTE1
         } else if (arr.length === 2) {
           mode = CONTROL.BYTE2
+        } else if (arr.length <= 255){
+          mode = CONTROL.BYTES // 多字节数据
+          arr.unshift(arr.length)
         } else {
           throw '数据格式错误'
         }

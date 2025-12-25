@@ -2,6 +2,7 @@
 export const CONTROL = {
   BYTE1: 0x10,
   BYTE2: 0x11,
+  BYTES: 0x13,
   GROUP_MAINTAIN: 0x12, // 组合保持运动
 }
 
