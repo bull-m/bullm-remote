@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { store } from '.'
-import { getCurrentWebview } from '@tauri-apps/api/webview';
-import { isMobile } from '@/utils/system/os.ts'
+import { getCurrentWebview } from '@tauri-apps/api/webview'
+import { platform } from '@/utils/system/os.ts'
 
 export const useStore = defineStore(
   'ui',
@@ -27,40 +27,39 @@ export const useStore = defineStore(
       noOverlay: false, // 是否隐藏mark层
     })
 
-    const routes = ref<(()=>any)[]>([])
-    function addRoute(route: ()=>any) {
+    const routes = ref<(() => any)[]>([])
+    function addRoute(route: () => any) {
       routes.value.push(route)
     }
-    function removeRoute(route: ()=>any) {
+    function removeRoute(route: () => any) {
       routes.value = routes.value.filter(x => x !== route)
     }
 
     // @ts-ignore
-    window._back = ()=>{
-      if (routes.value.length){
+    window._back = () => {
+      if (routes.value.length) {
         routes.value.pop()?.()
       }
     }
 
+    // 缩放
     const zoom = ref(1)
     watch(
       zoom,
-      newVal => {
-        if (isMobile()) {
-          // 移动端使用 CSS transform 实现缩放
-          const app = document.getElementById('root')
-          if (app) {
-            app.style.transform = `scale(${newVal})`
-            app.style.transformOrigin = 'top left'
-            app.style.width = `${100 / newVal}%`
-            app.style.height = `${100 / newVal}%`
-          }
-
+      val => {
+        zoom.value = Math.min(Math.max(val, 0.5), 3)
+        if (platform() === 'android') {
+          // 设置缩放比例为100%（原始大小）
+          ;(window as any).AndroidWebView.setScale(window.devicePixelRatio * zoom.value * 100)
         } else {
-          // 桌面端使用 Tauri API
-          getCurrentWebview().setZoom(newVal).catch(err => {
-            console.error('设置缩放失败:', err)
-          })
+          // Android：不支持。
+          // macOS：仅适用于macOS 11+。
+          // iOS：仅适用于iOS 14+。
+          getCurrentWebview()
+            .setZoom(val)
+            .catch(err => {
+              document.documentElement.style.zoom = `${val}` // 保底缩放方法
+            })
         }
       },
       { immediate: true }
@@ -83,7 +82,7 @@ export const useStore = defineStore(
       routes,
       addRoute,
       removeRoute,
-      zoom
+      zoom,
     }
   },
   {

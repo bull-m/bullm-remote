@@ -28,7 +28,37 @@ link.init()
 onMounted(() => {
   // 删除加载中的动画
   document.getElementById('yyz-loading')?.remove()
+  // 禁用缩放
+  preventZoom()
 })
+
+onUnmounted(() => {
+  removePreventZoom()
+})
+
+function preventZoom() {
+  document.addEventListener('gesturestart', preventGesture, { passive: false })
+  document.addEventListener('gesturechange', preventGesture, { passive: false })
+  document.addEventListener('gestureend', preventGesture, { passive: false })
+  document.addEventListener('touchmove', preventMultiTouch, { passive: false })
+}
+
+function removePreventZoom() {
+  document.removeEventListener('gesturestart', preventGesture)
+  document.removeEventListener('gesturechange', preventGesture)
+  document.removeEventListener('gestureend', preventGesture)
+  document.removeEventListener('touchmove', preventMultiTouch)
+}
+
+function preventGesture(e: Event) {
+  e.preventDefault()
+}
+
+function preventMultiTouch(e: TouchEvent) {
+  if (e.touches.length > 1) {
+    e.preventDefault()
+  }
+}
 </script>
 <style>
 .app {

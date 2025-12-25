@@ -108,8 +108,6 @@ SPDX-License-Identifier: MIT
           </div>
         </div>
       </div>
-      <!--   是的，我们根据MIT许可证许可，我们允许你进行商用，但是我们希望您在商用或者修改我们软件的时候不要删除我们的名字，谢谢❤️   -->
-      <div class="copyright" title="版权所有 © 2025 牛明工作室 / yy祝。保留所有权利。">© 2025 牛明工作室 / yy祝</div>
       <AppInfoDialog v-model:show="showAppInfo" />
       <AppSetupDialog v-model:show="showAppSetup" />
     </div>
@@ -118,6 +116,8 @@ SPDX-License-Identifier: MIT
     <ScanDialog v-model:show="showScan" />
     <NoticeDialog v-model:show="showNotice" v-model:notice-num="noticeNum" />
     <UpdateDialog v-model:show="showUpdate" v-model:is-update="isUpdate" />
+    <!--   是的，我们根据MIT许可证许可，我们允许你进行商用，但是我们希望您在商用或者修改我们软件的时候不要删除我们的名字，谢谢❤️   -->
+    <div v-if="!isDetails" class="copyright" title="版权所有 © 2025 牛明工作室 / yy祝。保留所有权利。">© 2025 牛明工作室 / yy祝</div>
   </div>
 </template>
 <script setup lang="ts">
@@ -541,7 +541,7 @@ watch(
 .links {
   width: 230px;
   height: 100%;
-  padding: 20px 10px;
+  padding: 10px 10px;
   overflow: auto;
 
   &::-webkit-scrollbar {

@@ -5,7 +5,7 @@
     v-model:show="show"
     position="right"
     close-on-popstate
-    teleport="#root"
+    teleport="body"
     class="setup-popup z-popup">
     <div class="nav-bar" @mousedown="appWindow.startDragging()">
       <div class="left" @click="close" @mousedown.stop>

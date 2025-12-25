@@ -71,7 +71,7 @@
   --van-button-default-border-color: rgba(255, 255, 255, 0.08);
 }
 
-html{
+html {
   overflow: hidden;
 }
 
@@ -85,33 +85,28 @@ body {
   user-select: none;
 }
 
-// 根容器
-#root{
+
+// vue
+#app {
   position: relative;
   height: 100%;
   width: 100%;
+  overflow: hidden;
+}
 
-  // vue
-  #app {
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
+// 透视容器
+#perspective-box {
+  perspective: 900px;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1000;
 
-  // 透视容器
-  #perspective-box {
-    perspective: 900px;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 1000;
-
-    > * {
-      pointer-events: auto;
-    }
+  > * {
+    pointer-events: auto;
   }
 }
 
