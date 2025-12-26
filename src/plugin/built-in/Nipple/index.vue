@@ -8,14 +8,14 @@
       </div>
       <div class="right" v-if="showRight">
         <RemotePole
-          :is-ptz-pitch="!!pzt.pitch_device"
-          :is-ptz-roll="!!pzt.roll_device"
+          :is-ptz-pitch="!!pzt.pitch_device && config.pzt"
+          :is-ptz-roll="!!pzt.roll_device && config.pzt"
           :disable-x="disableRightX"
           :disable-y="disableRightY"
           @joystick="joystickRight"
           @ptz="ptzRight"
           :is-dynamics="config.nipple_right_mode == 'dynamic'"
-          :is-ptz="true" />
+          :is-ptz="config.pzt && (!!pzt.pitch_device || !!pzt.roll_device)" />
       </div>
     </div>
   </div>

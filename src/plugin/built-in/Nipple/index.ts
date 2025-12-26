@@ -18,6 +18,7 @@ export function getDefaultConfig() {
     control_mode: 'wheel' as 'wheel' | 'tank' | 'left',
     nipple_left_mode: 'dynamic' as 'dynamic' | 'semi' | 'static',
     nipple_right_mode: 'dynamic' as 'dynamic' | 'semi' | 'static',
+    pzt: true
   }
 }
 
@@ -41,6 +42,10 @@ export function getConfigView(config: ConfigType) {
         '右摇杆',
         view.group('模式', view.radio('nipple_right_mode', { text: '动态位置', value: 'dynamic' }, { text: '绝对位置', value: 'static' }))
       )
+    ),
+    view.group(
+      '云台控制',
+      view.switch('pzt', '启用云台控制')
     )
   )
 }
