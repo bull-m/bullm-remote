@@ -35,9 +35,19 @@ const TestLink: LinkUtilType = {
       onmessage_byte: (data: Uint8Array) => {},
       onmessage_str: (data: string) => {},
       close: () => {},
-      send: (data: string | DataView) => {
+      send: (data: string | number[] | Object) => {
         if (typeof data === 'string') {
-          const json = JSON.parse(data)
+          data = JSON.parse(data)
+        }
+        if (data instanceof DataView) {
+          const hex = data.getUint8(0)
+          if (hex === 0xfe) {
+            const view = new Uint8Array(1)
+            view[0] = 0xfe
+            instance?.onmessage_byte(view)
+          }
+        } else {
+          const json = data as any
           if (json.type === 'options') {
             if (json.mode === 'get') {
               const ops =
@@ -80,14 +90,6 @@ const TestLink: LinkUtilType = {
                 i: json.i,
               })
             }
-          }
-        }
-        if (data instanceof DataView) {
-          const hex = data.getUint8(0)
-          if (hex === 0xfe) {
-            const view = new Uint8Array(1)
-            view[0] = 0xfe
-            instance?.onmessage_byte(view)
           }
         }
       },

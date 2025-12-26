@@ -48,7 +48,7 @@ export type LinkOption = (
 
 export type LinkInstanceType = {
   close: () => void
-  send: (data: string | DataView) => void
+  send: (data: string | number[] | Object) => void
   onopen: () => void
   onclose: (e: any) => void
   onerror: (e: any) => void

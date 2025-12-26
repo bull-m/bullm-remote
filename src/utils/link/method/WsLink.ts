@@ -79,7 +79,16 @@ const WsLink: LinkUtilType = {
         ws.onmessage = () => {}
         ws.close()
       },
-      send: (data: string | DataView) => ws.send(data),
+      send: (data: string | number[] | Object) => {
+        if (ws.readyState !== WebSocket.OPEN) return
+        if (typeof data === 'string') {
+          ws.send(data)
+        } else if (Array.isArray(data)) {
+          ws.send(new Uint8Array(data))
+        } else {
+          ws.send(JSON.stringify(data))
+        }
+      },
     }
     ws.onopen = () => instance.onopen()
     ws.onclose = e => instance.onclose(e)
@@ -87,7 +96,7 @@ const WsLink: LinkUtilType = {
     ws.onmessage = (msg: MessageEvent<any>) => {
       if (isBlob(msg.data)) {
         msg.data.arrayBuffer().then(uint8Array => {
-          if (uint8Array.length === 0) {
+          if (uint8Array.byteLength === 0) {
             console.warn('Received empty binary message')
             return
           }

@@ -69,16 +69,7 @@ export async function UdpSend(data: Array<number> | Object | string) {
 export function WsSend(data: Array<number> | Object) {
   const { connect, isLink } = useStoreLink()
   if (isLink) {
-    if (Array.isArray(data)) {
-      const buffer = new ArrayBuffer(data.length)
-      const view = new DataView(buffer)
-      for (let i = 0; i < data.length; i++) {
-        view.setUint8(i, data[i])
-      }
-      connect.instance?.send(view)
-    } else {
-      connect.instance?.send(JSON.stringify(data))
-    }
+    connect.instance?.send(data)
   } else {
     console.log('没有连接的小车')
   }
@@ -128,14 +119,15 @@ export function WsSendToCall(data: Array<number> | Object, timeout = 1000) {
 let timer
 export function monitorWsById(id: string | number, timeout = 1000): Promise<any> {
   return new Promise((resolve, reject) => {
-    $bus.on('ws:msg:' + id, data => {
+    function success(data) {
       timer && clearTimeout(timer)
-      $bus.off('ws:msg:' + id)
+      $bus.off('ws:msg:' + id, success)
       resolve(data)
-    })
+    }
+    $bus.on('ws:msg:' + id, success)
     // 超时监测
     timer = setTimeout(() => {
-      $bus.off('ws:msg:' + id)
+      $bus.off('ws:msg:' + id, success)
       reject()
     }, timeout)
   })
