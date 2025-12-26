@@ -35,10 +35,12 @@ export const useStore = defineStore(
       routes.value = routes.value.filter(x => x !== route)
     }
 
-    // @ts-ignore
-    window._back = () => {
+    // 安卓返回捕获
+    ;(window as any).androidBackCallback = () => {
       if (routes.value.length) {
         routes.value.pop()?.()
+      }else{
+        return 'exit' // 没有路由，退出
       }
     }
 

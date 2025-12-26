@@ -18,6 +18,9 @@
             android:label="@string/main_activity_title"
             android:name=".MainActivity"
             android:screenOrientation="landscape"
+            android:persistent="true"
+            android:alwaysRetainTaskState="true"
+            android:hardwareAccelerated="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

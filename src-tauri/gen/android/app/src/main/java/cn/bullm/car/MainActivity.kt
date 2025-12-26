@@ -6,6 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import android.webkit.WebView
 import android.webkit.JavascriptInterface
 import android.content.Context
+import android.webkit.WebSettings
+import androidx.activity.OnBackPressedCallback
 
 class MainActivity : TauriActivity() {
   private lateinit var wv: WebView
@@ -46,6 +48,18 @@ class MainActivity : TauriActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     enableEdgeToEdge()
     super.onCreate(savedInstanceState)
+
+    onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        wv.evaluateJavascript("javascript:androidBackCallback()") { result ->
+          if (result == "\"exit\"") {
+            wv.destroy()
+            finish()
+            finishAffinity()
+          } 
+        }
+      }
+    });
   }
 
   @SuppressLint("WebViewApiAvailability")
@@ -65,6 +79,14 @@ class MainActivity : TauriActivity() {
       displayZoomControls = false // 隐藏缩放按钮
       useWideViewPort = false // viewport支持
       loadWithOverviewMode = false // 禁用overview模式
+      // 禁用缓存（可选，避免后台缓存占用）
+      cacheMode = WebSettings.LOAD_NO_CACHE
+      // 允许后台加载资源
+      loadsImagesAutomatically = true
+      // 禁用自动暂停 JS（关键：避免后台暂停定时器）
+      setMediaPlaybackRequiresUserGesture(false)
+      // 开启 DOM 存储（保存页面状态）
+      domStorageEnabled = true
     }
 
     // 只有当保存过scale值时才应用
@@ -72,4 +94,5 @@ class MainActivity : TauriActivity() {
       wv.setInitialScale(currentScale)
     }
   }
+
 }
