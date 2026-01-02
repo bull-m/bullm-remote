@@ -33,6 +33,15 @@
 - [bull-m/bullm-remote-docs](https://github.com/bull-m/bullm-remote-docs) - 文档
 - [oshwhub.com/bullm/bullm-remote-main](https://oshwhub.com/bullm/bullm-remote-main) - 主控PCB设计
 
+## 部分演示 🚀
+
+<img src="https://car.bullm.cn/assets/car/1.jpg" alt="car1" width="400px" />
+<br>
+<img src="https://car.bullm.cn/assets/car/2.jpg" alt="car2" width="400px" />
+
+**麦克纳姆轮**  
+<img src="https://car.bullm.cn/assets/car/3.jpg" alt="car3" width="400px" />
+
 ## 致敬 🎉
 
 - [<img src="https://vuejs.org/logo.svg" height="13px" width="13px" /> Vue](https://vuejs.org/) - 不用多说，好用
