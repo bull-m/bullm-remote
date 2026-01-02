@@ -6,7 +6,7 @@
   <h1 align="center">牛明远控</h1>
 <p align="center">一个还不错的“小车远程控制”解决方案</p>
 <p align="center">
-  <img src="https://img.shields.io/github/license/bull-m/BULLM_ExtendModule" alt="Bullm Logo">
+  <img src="https://img.shields.io/github/license/bull-m/bullm-remote" alt="Bullm Logo">
   <img src="https://img.shields.io/github/v/release/bull-m/bullm-remote" alt="Bullm Logo">
 </p>
 
