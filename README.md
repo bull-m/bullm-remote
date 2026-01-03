@@ -31,7 +31,7 @@
 - [bull-m/bullm-remote-ap-web](https://github.com/bull-m/bullm-remote-ap-web) - 热点配网web
 - [bull-m/bullm-remote-esp](https://github.com/bull-m/bullm-remote-esp) - 主板固件
 - [bull-m/bullm-remote-docs](https://github.com/bull-m/bullm-remote-docs) - 文档
-- [oshwhub.com/bullm/bullm-remote-main](https://oshwhub.com/bullm/bullm-remote-main) - 主控PCB设计
+- [oshwhub.com/bullm/bullm-remote-main](https://oshwhub.com/bullm/bullm-remote-main) - 主控PCB设计(整理中)
 
 ## 部分演示 🚀
 
