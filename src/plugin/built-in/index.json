@@ -6,21 +6,21 @@
       "name": "信号",
       "type": "btn",
       "description": "展示小车的信号",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Live",
       "name": "图传",
       "type": "fullscreen",
       "description": "全屏的直播插件",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Nipple",
       "name": "虚拟摇杆",
       "type": "fullscreen",
       "description": "用于控制运动和云台",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Battery",
@@ -28,14 +28,14 @@
       "type": "btn",
       "btnIcon": "battery-charging",
       "description": "展示电池信息，电压电量等",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Rgb",
       "name": "RGB",
       "type": "btn",
       "description": "RGB !!!",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Gamepad",
@@ -43,14 +43,14 @@
       "type": "btn",
       "btnIcon": "google-gamepad",
       "description": "使用手柄控制",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Keyboard",
       "name": "键盘控制",
       "type": "no-ui",
       "description": "使用键盘控制",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Slider",
@@ -58,14 +58,14 @@
       "btnIcon": "slider",
       "type": "btn",
       "description": "有很多滑块 ~~",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "SwitchButton",
       "name": "开关按钮",
       "type": "btn",
       "description": "有开关两种状态的按钮",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Button",
@@ -73,14 +73,14 @@
       "btnIcon": "button-pointer",
       "type": "btn",
       "description": "一个按钮,可以用来控制设备",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     },
     {
       "source": "Led",
       "name": "Led",
       "type": "btn",
       "description": "Led",
-      "preview": "https://img.cdn.yyzhu.vip/2024/10/09/212638962.png"
+      "preview": ""
     }
   ]
 }
