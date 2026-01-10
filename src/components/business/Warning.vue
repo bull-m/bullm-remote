@@ -26,8 +26,8 @@ const prefix = {
   left: 10px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
   z-index: 100;
+  @include row-gap(7px);
 
   .item {
     background: #f00;

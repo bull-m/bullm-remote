@@ -123,6 +123,10 @@ body {
   width: 0;
 }
 
+svg {
+  display: block;
+}
+
 .position-center.position-center {
   position: absolute;
   top: 50%;

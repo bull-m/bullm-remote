@@ -77,4 +77,12 @@ export default defineConfig({
       ignored: ['**/src-tauri/**'],
     },
   },
+  css: {
+    preprocessorOptions: {
+      // 配置 SCSS 全局预加载
+      scss: {
+        additionalData: '@use "@/assets/styles/global-mixins" as *;',
+      },
+    },
+  },
 })

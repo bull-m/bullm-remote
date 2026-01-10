@@ -8,12 +8,12 @@ SPDX-License-Identifier: MIT
     <div class="head" @mousedown="startDragging">
       <div class="head-left">
         <ZFlex align="center" :gap="5" class="back-btn" v-if="isMobile() && isDetails" @click="backDetails" @mousedown.stop>
-          <IconMdiArrowBack />
+          <div><IconMdiArrowBack /></div>
           <div>返回</div>
         </ZFlex>
         <ZFlex align="center" :gap="8" class="logo">
-          <IconSvgLogo />
-          <span class="title">牛明 - 远控</span>
+          <div><IconSvgLogo /></div>
+          <div class="title">牛明 - 远控</div>
         </ZFlex>
         <ZTag v-if="!isDetails" @mousedown.stop style="margin-left: 15px; cursor: pointer" @click="showUpdate = true">
           {{ isUpdate ? '有新版本' : '已经是最新版本' }}
@@ -353,6 +353,7 @@ watch(
   .logo {
     opacity: 0.8;
     view-transition-name: home-logo;
+    margin-right: 10px;
     ::view-transition-old(root) {
       opacity: 0;
     }
@@ -360,7 +361,6 @@ watch(
       font-size: 17px;
       font-weight: bold;
       line-height: 1;
-      margin-right: 10px;
     }
   }
   .back-btn {
@@ -440,7 +440,6 @@ watch(
 
 .list {
   display: flex;
-  gap: 20px;
   padding: 20px;
   position: relative;
   height: 100%;
@@ -448,6 +447,7 @@ watch(
   overflow-y: auto;
   width: calc(100% - 230px);
   mask: linear-gradient(90deg, #fff 96%, #ffffff00 100%);
+  @include column-gap(20px);
 
   &::-webkit-scrollbar {
     display: none;
@@ -462,7 +462,6 @@ watch(
     align-items: self-start;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
     cursor: pointer;
     user-select: none;
     width: 220px;
@@ -517,9 +516,11 @@ watch(
       font-weight: bold;
       color: #fff;
       text-align: left;
+      margin-top: 10px;
     }
 
     .info {
+      margin-top: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -584,6 +585,7 @@ watch(
   justify-content: center;
   align-items: center;
   height: 100%;
+  @include column-gap(10px);
 
   .btn {
     display: flex;
@@ -592,10 +594,6 @@ watch(
     justify-content: center;
     padding: 10px;
     cursor: pointer;
-    margin-right: 10px;
-    &:last-child {
-      margin-right: 0;
-    }
 
     &:hover .icon {
       background-color: #88888870;

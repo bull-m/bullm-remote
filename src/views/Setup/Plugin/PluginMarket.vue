@@ -146,8 +146,10 @@ onUnmounted(() => {
       color: var(--van-primary-color);
       display: flex;
       align-items: center;
-      gap: 3px;
       cursor: pointer;
+      .icon{
+        margin-left: 3px;
+      }
     }
 
     .btn {

@@ -1,0 +1,26 @@
+
+// 兼容低版本的gap属性，放在flex布局中使用
+@mixin column-gap($spacing: 10px) {
+  > * {
+    margin-right: $spacing;
+  }
+  > *:last-of-type {
+    margin-right: 0;
+  }
+  > *:last-child {
+    margin-right: 0;
+  }
+}
+
+// 兼容低版本的gap属性，放在flex布局中使用
+@mixin row-gap($spacing: 10px) {
+  > * {
+    margin-bottom: $spacing;
+  }
+  > *:last-of-type {
+    margin-bottom: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}

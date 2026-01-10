@@ -7,15 +7,7 @@
         <van-switch @update:model-value="default_mac = $event ? props.mac : undefined" :model-value="default_mac == props.mac" />
       </template>
     </van-cell>
-    <div style="display: flex; margin-top: 10px; gap: 10px">
-      <!--      <van-button-->
-      <!--        type="warning"-->
-      <!--        class="w-full"-->
-      <!--        style="height: 38px; border-radius: 10px"-->
-      <!--        square-->
-      <!--        @click="onDelect">-->
-      <!--        取消收藏-->
-      <!--      </van-button>-->
+    <div style="display: flex; margin-top: 10px;">
       <van-button type="primary" class="w-full" style="height: 38px; border-radius: 10px" square @click="onSubmit">确定</van-button>
     </div>
   </ZPopup>

@@ -8,18 +8,18 @@
             <div>返回</div>
           </ZFlex>
         </div>
-        <div style="display: flex; gap: 10px">
+        <ZFlex :gap="10">
           <div class="mode-btn select-btn" @click="isVideoMode = true" :class="{ is: isVideoMode }" style="flex: 1; height: 130px">
             <IconSvgLive />
-            FPV模式
+            <div>FPV模式</div>
           </div>
           <div class="mode-btn select-btn" @click="onTip" :class="{ is: !isVideoMode }" style="flex: 1; height: 130px">
             <van-badge content="开发中" color="#1989fa">
               <IconSvgControl />
             </van-badge>
-            纯控制模式
+            <div>纯控制模式</div>
           </div>
-        </div>
+        </ZFlex>
         <div class="links" v-if="car?.links?.length ?? 0 > 0">
           <div style="font-size: 13px">连接通道</div>
           <div class="link select-btn" :class="{ is: i === selectIndex }" @click="selectIndex = i" v-for="(line, i) in car?.links">
@@ -211,25 +211,23 @@ onMounted(() => {
 
   .options {
     display: flex;
-    gap: 25px;
+    @include column-gap(25px);
 
     .option {
       display: flex;
       align-items: center;
-      gap: 5px;
       font-size: 16px;
       cursor: pointer;
 
       .icon {
         font-size: 20px;
+        margin-right: 5px;
       }
     }
   }
 
   .btns {
     margin-top: auto;
-    display: flex;
-    gap: 20px;
     width: 55%;
     margin-left: auto;
 
@@ -270,9 +268,9 @@ onMounted(() => {
   flex-direction: column;
   height: 100%;
   margin-right: 30px;
-  gap: 10px;
   overflow-y: auto;
   margin-top: 10px;
+  @include row-gap(10px);
 
   .head {
     height: 45px;
@@ -285,12 +283,12 @@ onMounted(() => {
 
   .mode-btn {
     font-size: 16px;
-    gap: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    @include row-gap(10px);
 
     .icon {
       width: 60px;

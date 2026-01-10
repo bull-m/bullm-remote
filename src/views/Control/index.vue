@@ -119,7 +119,6 @@ if (debugAutoOpenSetup) {
   right: 0;
   display: flex;
   height: var(--top-height);
-  gap: var(--top-height);
   @extend .plugin-list;
   //-webkit-app-region: drag; /* 标记为可拖拽区域 */
 
@@ -129,6 +128,7 @@ if (debugAutoOpenSetup) {
     align-items: center;
     flex-direction: row-reverse;
     flex-shrink: 0;
+    margin-left: var(--top-height);
   }
 
   .top-plugin-list {
@@ -153,13 +153,13 @@ if (debugAutoOpenSetup) {
   max-height: calc(100% - (var(--top-height) * 2) - 20px);
   width: var(--side-width);
   flex-direction: column;
-  gap: 10px;
   //background: rgba(0, 0, 0, 0.7);
   //border-radius: 0 10px 10px 0;
   //border: 1px solid rgba(255, 255, 255, 0.5);
   border-left: none;
   //padding: 5px 0;
   overflow-y: auto;
+  @include row-gap(10px);
 }
 
 .right-plugin-list {

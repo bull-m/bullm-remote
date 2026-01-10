@@ -161,7 +161,6 @@ function reset() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
 
   .list-item {
     width: calc(100% - 10px);
@@ -172,9 +171,19 @@ function reset() {
     left: 0;
     margin: 5px !important;
     padding-left: 10px;
+    z-index: 2;
+    background-color: #1c1c1edd;
 
+    :deep(.van-cell){
+      height: 100%;
+    }
+    :deep(.van-cell__title){
+      display: flex;
+      align-items: center;
+    }
     .sort-btn,
     :deep(.van-cell__right-icon),
+    :deep(.van-cell__label),
     :deep(.van-cell__value) {
       display: none;
     }
@@ -184,6 +193,7 @@ function reset() {
     width: 30px;
     height: 30px;
     opacity: 0.8;
+    margin-bottom: 10px;
   }
 
   .draggable {
