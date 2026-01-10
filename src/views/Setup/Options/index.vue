@@ -17,6 +17,7 @@ import { useStoreLink } from '@/store/link'
 import { getVersion } from '@tauri-apps/api/app'
 import { save } from '@tauri-apps/plugin-dialog'
 import { writeTextFile } from '@tauri-apps/plugin-fs'
+import { PlusStorage } from '@/utils/system/storage.ts'
 
 const chassisStore = useStoreChassis()
 const link = useStoreLink()
@@ -30,7 +31,7 @@ async function getRoot() {
 
 async function onPlugins(isAll = false) {
   const root = await getRoot()
-  const store = await Store.load('plugins.bin')
+  const store = PlusStorage('plugins.bin')
   if (isAll) {
     const keys = await store.keys()
     for (let i = 0; i < keys.length; i++) {

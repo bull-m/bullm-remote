@@ -7,10 +7,10 @@ import { loadPlugin } from '@/utils/plugin.ts'
 import { BuiltInPlugin, PluginType, SetUpType } from '@/plugin'
 import { fieldsFilter, fieldsFilterHigh } from '@/utils'
 import { useStoreWarning } from '@/store/warning.ts'
-import { LazyStore } from '@tauri-apps/plugin-store'
+import { PlusStorage } from '@/utils/system/storage.ts'
 
 // 插件配置存储
-const tauriStore = new LazyStore('plugins.bin')
+const plusStorage = PlusStorage('plugins.bin')
 
 export type PositionEnum = 'top' | 'left' | 'right' | 'permanent'
 
@@ -67,7 +67,7 @@ export const useStore = defineStore(
       clear()
       const { connect, isLink } = useStoreLink()
       if (!isLink || !connect.info) return Promise.reject()
-      const save = await tauriStore.get('plugins_' + connect.info.mac)
+      const save = await plusStorage.get('plugins_' + connect.info.mac)
       let def = []
       try {
         def = JSON.parse(JSON.stringify(defaultPlugin[connect.info.type || 'null']))
@@ -150,7 +150,7 @@ export const useStore = defineStore(
         showToast('未连接设备，重置失败')
         return
       }
-      await tauriStore.delete('plugins_' + connect.info!.mac)
+      await plusStorage.delete('plugins_' + connect.info!.mac)
       await init()
     }
 
@@ -201,7 +201,10 @@ export const useStore = defineStore(
           return
         }
         let json: PluginSaveType[] = list.value.map(item => fieldsFilter(item.options, 'name', 'icon', 'info', 'config', 'position'))
-        tauriStore.set('plugins_' + connect.info!.mac, json)
+        plusStorage.set('plugins_' + connect.info!.mac, json).catch(e=>{
+          console.log(e)
+          showToast('保存插件设置失败了')
+        })
       }, 300)
     }
 
