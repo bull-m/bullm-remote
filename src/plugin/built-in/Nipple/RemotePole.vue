@@ -76,7 +76,7 @@ async function init() {
             startPTZ(e)
             stopYg()
           }
-        }, 200)
+        }, 300)
       }
     })
   } else {
