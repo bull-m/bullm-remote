@@ -95,13 +95,33 @@ const WsLink: LinkUtilType = {
     ws.onerror = e => instance.onerror(e)
     ws.onmessage = (msg: MessageEvent<any>) => {
       if (isBlob(msg.data)) {
-        msg.data.arrayBuffer().then(uint8Array => {
-          if (uint8Array.byteLength === 0) {
-            console.warn('Received empty binary message')
-            return
+        // 兼容低版本浏览器
+        if (typeof msg.data.arrayBuffer === 'function') {
+          // 现代浏览器
+          msg.data.arrayBuffer().then(uint8Array => {
+            if (uint8Array.byteLength === 0) {
+              console.warn('Received empty binary message')
+              return
+            }
+            instance.onmessage_byte(uint8Array)
+          })
+        } else {
+          // 低版本浏览器使用 FileReader
+          const reader = new FileReader()
+          reader.onload = (e) => {
+            if (!e.target) return
+            const uint8Array = new Uint8Array(e.target.result as ArrayBuffer)
+            if (uint8Array.byteLength === 0) {
+              console.warn('Received empty binary message')
+              return
+            }
+            instance.onmessage_byte(uint8Array)
           }
-          instance.onmessage_byte(uint8Array)
-        })
+          reader.onerror = () => {
+            console.error('Failed to read binary message')
+          }
+          reader.readAsArrayBuffer(msg.data)
+        }
         return
       }
       try {
