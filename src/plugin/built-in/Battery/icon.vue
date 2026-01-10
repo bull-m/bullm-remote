@@ -1,5 +1,5 @@
 <template>
-  <Components.IconView :name="battery.voltage + 'V'" />
+  <Components.IconView :name="battery.voltage.toFixed(1) + 'V'" />
 </template>
 
 <script setup lang="ts">
