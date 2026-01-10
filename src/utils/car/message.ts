@@ -1,10 +1,9 @@
 import { invoke } from '@tauri-apps/api/core'
 import { useStoreLink } from '@/store/link'
 import $bus from '@/utils/bus.ts'
-import Http from '@/utils/car/http.ts'
-import axios from 'axios'
 import { UdpBindAt } from '@/utils/car/udp.ts'
 import { numTo2Byte } from '@/utils'
+import { framework, FrameworkTauri } from '@/utils/system/os.ts'
 
 export function initCommunication() {
   $bus.off('send')
@@ -28,6 +27,7 @@ let seq = 0
  * @param data
  */
 export async function UdpSend(data: Array<number> | Object | string) {
+  if (framework() !== FrameworkTauri) return
   const { connectIp } = useStoreLink()
   if (!connectIp) {
     console.log('没有连接的小车')

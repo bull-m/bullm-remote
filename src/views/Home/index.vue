@@ -5,7 +5,7 @@ SPDX-License-Identifier: MIT
 -->
 <template>
   <div class="bj-box" data-me="U2FsdGVkX18KdVjj8xJmajBuZSFc1WXU7HjTZnnjJtYY7bPDufe0wj2u3ohbXvd+cweo3EXASw==">
-    <div class="head" @mousedown="appWindow.startDragging">
+    <div class="head" @mousedown="startDragging">
       <div class="head-left">
         <ZFlex align="center" :gap="5" class="back-btn" v-if="isMobile() && isDetails" @click="backDetails" @mousedown.stop>
           <IconMdiArrowBack />
@@ -131,13 +131,10 @@ import { getCarIcon } from '@/views/Home/utils.ts'
 import ScanDialog from '@/views/Home/dialog/ScanDialog.vue'
 import UpdateDialog from '@/views/Home/dialog/UpdateDialog.vue'
 import NoticeDialog from '@/views/Home/dialog/NoticeDialog.vue'
-import { isMobile } from '@/utils/system/os.ts'
-import { getCurrentWindow } from '@tauri-apps/api/window'
+import { isMobile, startDragging } from '@/utils/system/os.ts'
 import Titlebar from '@/components/business/Titlebar.vue'
 import { useStoreUi } from '@/store/ui.ts'
 import AppSetupDialog from '@/views/Home/dialog/AppSetupDialog.vue'
-
-const appWindow = getCurrentWindow()
 
 const link = useStoreLink()
 const ui = useStoreUi()
@@ -348,7 +345,7 @@ watch(
   .logo {
     opacity: 0.8;
     view-transition-name: home-logo;
-    ::view-transition-old(root){
+    ::view-transition-old(root) {
       opacity: 0;
     }
     .title {
@@ -369,7 +366,6 @@ watch(
     cursor: pointer;
     justify-content: center;
     padding-right: 20px;
-    font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     color: #fff;

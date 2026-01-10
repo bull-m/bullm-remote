@@ -14,9 +14,9 @@
 import { useStoreChassis } from '@/store/modules/chassis.ts'
 import { Store } from '@tauri-apps/plugin-store'
 import { useStoreLink } from '@/store/link'
-import { getVersion } from '@tauri-apps/api/app'
 import { save } from '@tauri-apps/plugin-dialog'
 import { writeTextFile } from '@tauri-apps/plugin-fs'
+import { getAppVersion } from '@/utils/system/os.ts'
 import { PlusStorage } from '@/utils/system/storage.ts'
 
 const chassisStore = useStoreChassis()
@@ -24,7 +24,7 @@ const link = useStoreLink()
 
 async function getRoot() {
   return {
-    version: await getVersion(),
+    version: getAppVersion(),
     data: {},
   }
 }

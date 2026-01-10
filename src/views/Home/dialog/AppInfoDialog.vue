@@ -24,10 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { getVersion, getTauriVersion, getIdentifier } from '@tauri-apps/api/app'
+import { getTauriVersion } from '@tauri-apps/api/app'
 import { isTauri } from '@tauri-apps/api/core'
 import packageJson from '../../../../package.json'
-import { openUrl } from '@/utils' // 确保你的 Vite 配置允许直接导入 JSON
+import { openUrl } from '@/utils'
+import { getAppVersion } from '@/utils/system/os.ts' // 确保你的 Vite 配置允许直接导入 JSON
 
 const info = ref({
   appVersion: '',
@@ -57,7 +58,7 @@ const all_lib = computed(() => {
 })
 
 async function open() {
-  info.value.appVersion = await getVersion()
+  info.value.appVersion = getAppVersion()
   info.value.tauriVersion = await getTauriVersion()
   info.value.isTauri = isTauri()
 }

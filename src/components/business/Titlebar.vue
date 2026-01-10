@@ -1,9 +1,9 @@
 <template>
   <div class="titlebar" @mousedown.stop>
-    <div class="btn icon-shadow" @click="appWindow.minimize">
+    <div class="btn icon-shadow" @click="appMinimize">
       <IconMdiWindowMinimize />
     </div>
-    <div class="btn icon-shadow" @click="appWindow.toggleMaximize">
+    <div class="btn icon-shadow" @click="appToggleMaximize">
       <IconMdiWindowMaximize />
     </div>
     <div class="btn icon-shadow close" @click="close">
@@ -13,9 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCurrentWindow } from '@tauri-apps/api/window'
-
-const appWindow = getCurrentWindow()
+import { appMinimize, appToggleMaximize, appClose } from '@/utils/system/os.ts'
 
 const props = defineProps<{
   close?: () => void
@@ -26,7 +24,7 @@ function close() {
     props.close()
     return
   }
-  appWindow.close()
+  appClose()
 }
 </script>
 

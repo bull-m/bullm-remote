@@ -34,7 +34,7 @@ import { ref, onMounted, watch } from 'vue'
 import { openUrl } from '@/utils'
 import { StorageSetItem, StorageGetItem } from '@/utils/system/storage.ts'
 import axios from 'axios'
-import { getVersion } from '@tauri-apps/api/app'
+import { getAppVersion } from '@/utils/system/os.ts'
 
 const show = defineModel<boolean>('show')
 const noticeNum = defineModel<number>('noticeNum')
@@ -78,7 +78,7 @@ function updateNoticeNum() {
 
 async function init() {
   // 获取通知数据
-  data.value = await axios.get(`https://car.bullm.cn/public-api/notice/latest?version=${await getVersion()}`).then(res => {
+  data.value = await axios.get(`https://car.bullm.cn/public-api/notice/latest?version=${getAppVersion()}`).then(res => {
     return res.data.data
   })
   // 清楚已经不存在的id

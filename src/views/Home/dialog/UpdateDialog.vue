@@ -60,7 +60,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { openUrl } from '@/utils'
 import axios from 'axios'
-import { getVersion } from '@tauri-apps/api/app'
+import { getAppVersion } from '@/utils/system/os.ts'
 
 const show = defineModel<boolean>('show')
 const isUpdate = defineModel<boolean>('isUpdate')
@@ -84,7 +84,7 @@ const data = ref({
 })
 
 async function init() {
-  data.value = await axios.get(`https://car.bullm.cn/public-api/version/check?version=${await getVersion()}`).then(res => {
+  data.value = await axios.get(`https://car.bullm.cn/public-api/version/check?version=${getAppVersion()}`).then(res => {
     return res.data.data
   })
   if (data.value.has_compatible || data.value.has_update) {

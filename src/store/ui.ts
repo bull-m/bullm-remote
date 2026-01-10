@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { store } from '.'
 import { getCurrentWebview } from '@tauri-apps/api/webview'
-import { platform } from '@/utils/system/os.ts'
+import { framework, FrameworkWeb, platform } from '@/utils/system/os.ts'
 
 export const useStore = defineStore(
   'ui',
@@ -50,10 +50,12 @@ export const useStore = defineStore(
       zoom,
       val => {
         zoom.value = Math.min(Math.max(val, 0.5), 3)
-        if (platform() === 'android') {
+        if (framework() === FrameworkWeb){ // web环境
+          document.documentElement.style.zoom = `${val}` // 保底缩放方法
+        }else if (platform() === 'android') { // 安卓
           // 设置缩放比例为100%（原始大小）
           ;(window as any).AndroidWebView.setScale(window.devicePixelRatio * zoom.value * 100)
-        } else {
+        } else { // 其他
           // Android：不支持。
           // macOS：仅适用于macOS 11+。
           // iOS：仅适用于iOS 14+。

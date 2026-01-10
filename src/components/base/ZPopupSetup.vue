@@ -7,7 +7,7 @@
     close-on-popstate
     teleport="body"
     class="setup-popup z-popup">
-    <div class="nav-bar" @mousedown="appWindow.startDragging()">
+    <div class="nav-bar" @mousedown="startDragging()">
       <div class="left" @click="close" @mousedown.stop>
         <van-icon name="arrow-left" />
         返回
@@ -15,18 +15,16 @@
       <div class="title">
         {{ title }}
       </div>
-      <div class="right" v-if="reset" @click="reset" @mousedown.stop>
-        重置
-      </div>
+      <div class="right" v-if="reset" @click="reset" @mousedown.stop>重置</div>
     </div>
-<!--    <van-nav-bar-->
-<!--      :title="title"-->
-<!--      left-text="返回"-->
-<!--      left-arrow-->
-<!--      @click-left="close"-->
-<!--      :right-text="reset ? '重置' : undefined"-->
-<!--      @click-right="reset"-->
-<!--      placeholder />-->
+    <!--    <van-nav-bar-->
+    <!--      :title="title"-->
+    <!--      left-text="返回"-->
+    <!--      left-arrow-->
+    <!--      @click-left="close"-->
+    <!--      :right-text="reset ? '重置' : undefined"-->
+    <!--      @click-right="reset"-->
+    <!--      placeholder />-->
     <div class="box" :class="{ 'no-scroll': noScroll }" :id="boxId">
       <van-loading size="24px" vertical v-if="loading">加载中...</van-loading>
       <slot v-if="typeof loading === 'boolean' ? !loading : true"></slot>
@@ -36,12 +34,10 @@
 </template>
 <script setup lang="ts">
 import { useStoreUi } from '@/store/ui.ts'
+import { startDragging } from '@/utils/system/os.ts'
 
 const show = defineModel<boolean>('show')
 const props = defineProps(['reset', 'title', 'boxId', 'loading', 'noScroll', 'beforeClose'])
-import { getCurrentWindow } from '@tauri-apps/api/window'
-
-const appWindow = getCurrentWindow()
 
 const ui = useStoreUi()
 
@@ -59,9 +55,13 @@ async function close() {
   }
 }
 
-watch(show, val => {
-  val ? ui.addRoute(close) : ui.removeRoute(close)
-}, {immediate: true})
+watch(
+  show,
+  val => {
+    val ? ui.addRoute(close) : ui.removeRoute(close)
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped lang="scss">
@@ -122,7 +122,7 @@ watch(show, val => {
     border-bottom: 1px solid var(--van-border-color);
     transform: scale(0.5);
   }
-  .title{
+  .title {
     max-width: 60%;
     margin: 0 auto;
     color: #f5f5f5;
@@ -144,7 +144,7 @@ watch(show, val => {
     align-items: center;
     padding: 0 var(--van-padding-md);
     font-size: var(--van-font-size-md);
-    color: var(--van-primary-color);;
+    color: var(--van-primary-color);
     cursor: pointer;
     &:active {
       opacity: var(--van-active-opacity);

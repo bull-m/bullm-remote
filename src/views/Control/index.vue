@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT
   <div class="control" data-me="U2FsdGVkX18KdVjj8xJmajBuZSFc1WXU7HjTZnnjJtYY7bPDufe0wj2u3ohbXvd+cweo3EXASw==">
     <!-- 设置主入口 -->
     <SetupIndex v-model:show="ui.showSetup" />
-    <div class="top-list" @mousedown="appWindow.startDragging">
+    <div class="top-list" @mousedown="startDragging">
       <div class="top-plugin-list">
         <div @mousedown.stop class="plugin-btn-text top" @click="onBack()">
           <IconSvgHome class="icon-shadow" />
@@ -64,10 +64,7 @@ import PluginIcon from '@/plugin/component/PluginIcon.vue'
 import { useStoreUi } from '@/store/ui.ts'
 import { KeyboardClear, KeyboardInit } from '@/utils/device/keyboard.ts'
 import { debugAutoOpenSetup } from '@/views/debug.ts'
-import { getCurrentWindow } from '@tauri-apps/api/window'
-import { isMobile } from '@/utils/system/os.ts'
-
-const appWindow = getCurrentWindow()
+import { appClose, isMobile, startDragging } from '@/utils/system/os.ts'
 
 const link = useStoreLink()
 const pluginStore = useStorePlugin()
@@ -82,7 +79,7 @@ function onClose() {
   link.close()
   showToast('已断开连接')
   setTimeout(() => {
-    appWindow.close()
+    appClose()
   }, 500)
 }
 
