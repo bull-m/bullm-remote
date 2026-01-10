@@ -32,6 +32,7 @@
 | @tauri-apps/cli            | MIT License        | https://github.com/tauri-apps/tauri                 | Copyright (c) 2017 - Present Tauri Apps Contributors                                           |
 | @types/node                | MIT License        | https://github.com/DefinitelyTyped/DefinitelyTyped  | Copyrights are respective of each contributor listed at the beginning of each definition file. |
 | @vant/auto-import-resolver | MIT License        | https://github.com/youzan/vant                      | Copyright (c) Youzan; Chen Jiahan and other contributors                                       |
+| @vitejs/plugin-legacy      | MIT License        | https://github.com/vitejs/vite                      | Copyright (c) 2019-present, VoidZero Inc. and Vite contributors                                |
 | @vitejs/plugin-vue         | MIT License        | https://github.com/vitejs/vite-plugin-vue           | Copyright (c) 2019-present, Yuxi (Evan) You and Vite contributors                              |
 | prettier                   | MIT License        | https://github.com/prettier/prettier                | Copyright (c) James Long and contributors                                                      |
 | sass-embedded              | MIT License        | https://github.com/sass/embedded-host-node          | Copyright (c) 2019, Google LLC                                                                 |
