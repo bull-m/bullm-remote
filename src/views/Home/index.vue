@@ -73,7 +73,7 @@ SPDX-License-Identifier: MIT
           </div>
         </div>
         <div class="links">
-          <div style="margin-bottom: 5px; display: flex; align-items: center; gap: 10px; color: #fff">连接通道</div>
+          <div style="margin-bottom: 5px; color: #fff">连接通道</div>
           <div class="link" v-for="(link, i) in links" :key="i" @click="onLinkClick(link.linkOption)">
             <div class="host">{{ link.linkOption.name }}</div>
             <van-loading size="17px" style="margin-right: 10px" class="icon" v-if="scanLoading" type="spinner" color="#FFFFFF" />
@@ -222,18 +222,26 @@ const selectedCar = computed(() => {
 })
 
 function backDetails() {
-  document.startViewTransition(() => {
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      isDetails.value = false
+    })
+  } else {
     isDetails.value = false
-  })
+  }
 }
 
 function onCarClick(car: CarType, line?: LinkOption) {
   selectMac.value = car.mac
-  nextTick(() => {
-    document.startViewTransition(() => {
-      isDetails.value = true
+  if (document.startViewTransition) {
+    nextTick(() => {
+      document.startViewTransition(() => {
+        isDetails.value = true
+      })
     })
-  })
+  } else {
+    isDetails.value = true
+  }
 }
 
 function onAddLink() {
@@ -576,7 +584,6 @@ watch(
   justify-content: center;
   align-items: center;
   height: 100%;
-  gap: 10px;
 
   .btn {
     display: flex;
@@ -585,7 +592,10 @@ watch(
     justify-content: center;
     padding: 10px;
     cursor: pointer;
-    gap: 6px;
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
 
     &:hover .icon {
       background-color: #88888870;
@@ -616,7 +626,7 @@ watch(
     .name {
       font-size: 13px;
       color: #fff;
-      margin-top: 3px;
+      margin-top: 9px;
     }
   }
 }
