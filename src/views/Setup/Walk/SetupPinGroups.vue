@@ -185,7 +185,7 @@ function onSubmit() {
     if (!item.groups) return
     const index = item.groups.findIndex((_, index) => DeviceId.extendGroup(item.id, index) === form.value.id) ?? -1
     if (index != -1) {
-      item.groups[index] = { ...form.value }
+      item.groups[index] = { ...form.value, id: undefined } as any // 扩展版内的组合不需要定义id
       return true
     }
   })

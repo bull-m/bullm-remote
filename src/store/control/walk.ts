@@ -78,7 +78,6 @@ export type DigitalType = DevicePublicType & DigitalOptionType
 export type GroupOptionType = {
   reversal?: boolean // 是否反转
   auto_brake?: boolean // 是否自动刹车
-  drive?: WalkGroupType
   def?: number
 } & (
   | {
@@ -106,6 +105,7 @@ export type GroupOptionType = {
 )
 
 export type GroupType = Omit<DevicePublicType, 'pin'> & GroupOptionType
+export type ExtendGroupType = Omit<DevicePublicType, 'pin' | 'id'> & GroupOptionType
 
 export type PinFuncType = 'pwm' | 'servo' | 'input' | 'digital'
 
@@ -127,7 +127,7 @@ export type ExtendType = {
   pwms?: ({ pin: number; hide?: boolean; name?: string } & PwmOptionType)[]
   digitals?: ({ pin: number; hide?: boolean; name?: string } & DigitalOptionType)[]
   servos?: ({ pin: number; hide?: boolean; name?: string } & ServoOptionType)[]
-  groups?: GroupType[] // 扩展板内的组合  id规则：group:address-index-i
+  groups?: ExtendGroupType[] // 扩展板内的组合  id规则：group:address-index-i
 }
 
 // 最终使用的IO口列表
@@ -246,7 +246,7 @@ export const useStore = defineStore(
               builtIn: true,
               hide: digital.hide,
               remote_key: RemoteKey.extendDrive(index++),
-            }
+            } as DigitalType & { remote_key: number }
           }) ?? [],
         pwms:
           item.pwms?.map(pwm => {
@@ -265,7 +265,7 @@ export const useStore = defineStore(
               hide: pwm.hide,
               from: `来自扩展(${item.name})`,
               remote_key: RemoteKey.extendDrive(index++),
-            }
+            } as PwmType & { remote_key: number }
           }) ?? [],
         servos:
           item.servos?.map(servo => {
@@ -279,7 +279,7 @@ export const useStore = defineStore(
               builtIn: true,
               hide: servo.hide,
               remote_key: RemoteKey.extendDrive(index++),
-            }
+            } as ServoType & { remote_key: number }
           }) ?? [],
         groups:
           item.groups?.map((group, g_index) => {
@@ -290,7 +290,7 @@ export const useStore = defineStore(
               builtIn: true,
               from: `来自扩展(${item.name})`,
               remote_key: RemoteKey.extendDrive(index++),
-            }
+            } as GroupType & { remote_key: number }
           }) ?? [],
         pins:
           item.pins?.map(pin => {
@@ -383,7 +383,7 @@ export const useStore = defineStore(
       ]
     })
     // 所有的组合，包括扩展板生成的
-    const groups_all = computed(() => {
+    const groups_all = computed<(GroupType & { remote_key: number })[]>(() => {
       // 顺序很重要，先合并自定义的组合，再合并扩展板内置的组合
       return [
         ...groups.value.map((x, i) => ({
@@ -629,7 +629,7 @@ export function useStoreWalk() {
   return useStore(store)
 }
 
-function groupsFieldsFilter(list: GroupType[]) {
+function groupsFieldsFilter(list: GroupType[] | ExtendGroupType[]) {
   let pub_key = ['id', 'name', 'type', 'reversal', 'auto_brake', 'builtIn']
   return list.map(item => {
     switch (item.type) {
@@ -682,19 +682,19 @@ export const PinId = {
 // 生成完整的设备id
 export const DeviceId = {
   // 一个组合会使用多个pin，使用下标生成id，特殊处理
-  extendGroup(id: string, index: number) {
-    return `${PREFIX.GROUP}${id}-${index}`
+  extendGroup(extendId: string, index: number) {
+    return `${PREFIX.GROUP}${extendId}-${index}`
   },
 
   // 舵机、pwm、电平、引脚都要pin字段且都是唯一的，所以用pin生成唯一id
-  extendServo(id: string, pin: number) {
-    return `${PREFIX.SERVO}${id}-${pin}`
+  extendServo(extendId: string, pin: number) {
+    return `${PREFIX.SERVO}${extendId}-${pin}`
   },
-  extendPwm(id: string, pin: number) {
-    return `${PREFIX.PWM}${id}-${pin}`
+  extendPwm(extendId: string, pin: number) {
+    return `${PREFIX.PWM}${extendId}-${pin}`
   },
-  extendDigital(id: string, pin: number) {
-    return `${PREFIX.DIGITAL}${id}-${pin}`
+  extendDigital(extendId: string, pin: number) {
+    return `${PREFIX.DIGITAL}${extendId}-${pin}`
   },
 
   // 下面是自定义添加设备的id

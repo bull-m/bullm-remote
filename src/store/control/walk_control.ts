@@ -1,6 +1,6 @@
-import { UdpSend, WsSend, WsSendFuncMode } from '@/utils/car/message.ts'
+import { WsSend, WsSendFuncMode } from '@/utils/car/message.ts'
 import { minMax, numTo2Byte } from '@/utils'
-import { CONTROL, PREFIX, PWM_MAX, PWM_MIN, SERVO_MAX, SERVO_MIN } from '@/constants'
+import { CONTROL, PWM_MAX, PWM_MIN, SERVO_MAX, SERVO_MIN } from '@/constants'
 import { isDigital, isGroup, isPwm, isServo, useStoreWalk } from '@/store/control/walk.ts'
 import { ref } from 'vue'
 import { useStoreWarning } from '@/store/warning.ts'
