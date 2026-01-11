@@ -68,7 +68,7 @@ const tabs = computed(() => {
   if (props.selectGroup) {
     tabList.push({
       key: 'group',
-      title: '选择组合',
+      title: '选择电机驱动',
       items: walkStore.groups_show,
     })
   }

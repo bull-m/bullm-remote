@@ -7,9 +7,9 @@
         <van-button type="warning" size="mini" style="padding: 0 10px" @click="walkStore.reset(OPTIONS.WALK_DIGITALS)">重置</van-button>
       </ZFlex>
     </template>
-    <ZNullCell v-if="walkStore.digitals_show.length == 0">没有输出</ZNullCell>
+    <ZNullCell v-if="walkStore.digitals_show.filter(x => !x.hide).length == 0">没有电平输出</ZNullCell>
     <van-cell
-      v-for="(item, i) in walkStore.digitals_show.filter(x => !x.builtIn)"
+      v-for="(item, i) in walkStore.digitals_show.filter(x => !x.builtIn && !x.hide)"
       @click="onForm(item)"
       class="group-cell"
       inset
@@ -55,7 +55,7 @@
       </van-cell>
     </ZCollapse>
   </van-cell-group>
-  <van-action-sheet v-model:show="showAction" :title="index != -1 ? '编辑输出' : '新增输出'">
+  <van-action-sheet v-model:show="showAction" :title="index != -1 ? '编辑电平输出' : '新增电平输出'">
     <van-form ref="formRef" @submit="onSubmit" :submit-on-enter="false">
       <van-notice-bar v-if="form.builtIn">该输出来自扩展模块或是内置的，部分参数不允许修改</van-notice-bar>
       <van-field

@@ -12,9 +12,6 @@ export const useStore = defineStore(
     // 超过5秒未收到数据，则认为连接断开
     let t1: any = null
     let t2: any = null
-    const buffer = new ArrayBuffer(1)
-    const view = new DataView(buffer)
-    view.setUint8(0, 0xfe)
     function timeout() {
       t1 && clearTimeout(t1)
       t2 && clearTimeout(t2)

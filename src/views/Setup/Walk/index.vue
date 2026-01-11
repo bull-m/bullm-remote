@@ -36,7 +36,7 @@ const list = [
     component: SetupPinServos,
   },
   {
-    label: '驱动组合',
+    label: '电机驱动',
     component: SetupPinGroups,
   },
 ]

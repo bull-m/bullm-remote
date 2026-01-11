@@ -1,14 +1,14 @@
 <template>
-  <van-cell-group inset title="组合">
+  <van-cell-group inset title="电机驱动">
     <template #title>
       <ZFlex align="center" style="margin-bottom: -10px" :gap="5">
-        组合驱动
+        电机驱动（组合）
         <van-button type="primary" size="mini" style="padding: 0 10px; margin-left: auto" @click="onForm(def)">添加</van-button>
         <van-button type="warning" size="mini" style="padding: 0 10px" @click="walkStore.reset(OPTIONS.WALK_GROUPS)">重置</van-button>
       </ZFlex>
     </template>
 
-    <ZNullCell v-if="walkStore.groups_show.length == 0">没有组合</ZNullCell>
+    <ZNullCell v-if="walkStore.groups_show.length == 0">没有电机驱动</ZNullCell>
 
     <van-cell
       v-for="(item, i) in walkStore.groups_show"
@@ -49,17 +49,17 @@
     <!--      </van-cell>-->
     <!--    </ZCollapse>-->
   </van-cell-group>
-  <van-action-sheet v-model:show="showAction" :title="isEdit ? '编辑引脚组合' : '新增引脚组合'">
+  <van-action-sheet v-model:show="showAction" :title="isEdit ? '编辑电机驱动' : '新增电机驱动'">
     <van-form ref="formRef" @submit="onSubmit" :submit-on-enter="false">
-      <van-notice-bar v-if="form.builtIn">该组合来自扩展模块或是内置的，部分参数不允许修改</van-notice-bar>
+      <van-notice-bar v-if="form.builtIn">该电机驱动来自扩展模块或是内置的，部分参数不允许修改</van-notice-bar>
       <van-field
         :maxlength="10"
         v-model.trim="form.name"
         required
         name="picker"
         label="名称"
-        placeholder="组合名称(最多10个字符)"
-        :rules="[{ required: true, message: '请输入组合名称' }]" />
+        placeholder="电机驱动名称(最多10个字符)"
+        :rules="[{ required: true, message: '请输入电机驱动名称' }]" />
       <ZVanSelect
         :disabled="form.builtIn"
         v-model="form.type"
@@ -147,7 +147,7 @@ function onDelect(id: string) {
   showConfirmDialog({
     teleport: '#SetupWalk',
     title: '真的吗？',
-    message: '真的要删除这个引脚组合吗？',
+    message: '真的要删除这个电机驱动吗？',
     confirmButtonText: '确认',
     cancelButtonText: '取消',
   }).then(() => {
@@ -176,11 +176,11 @@ function onSubmit() {
   }
   const index = walkStore.groups.findIndex(item => item.id === form.value.id)
   if (index != -1) {
-    // 是普通的组合
+    // 是普通的电机驱动
     walkStore.groups[index] = { ...form.value }
     return
   }
-  // 寻找扩展版中的组合
+  // 寻找扩展版中的电机驱动
   const isExtend = walkStore.extend.some(item => {
     if (!item.groups) return
     const index = item.groups.findIndex((_, index) => DeviceId.extendGroup(item.id, index) === form.value.id) ?? -1
@@ -195,7 +195,7 @@ function onSubmit() {
 }
 
 function onTip() {
-  showDialog({ title: '这是什么？', message: '这是由扩展板自动生成的组合' })
+  showDialog({ title: '这是什么？', message: '这是由扩展板自动生成的电机驱动' })
 }
 </script>
 <style lang="scss" scoped>

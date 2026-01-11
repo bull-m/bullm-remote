@@ -60,7 +60,7 @@
             ...item.pwms.map(x => ({ ...x, _label: 'PWM输出' })),
             ...item.digitals.map(x => ({ ...x, _label: '电平输出' })),
             ...item.servos.map(x => ({ ...x, _label: '舵机输出' })),
-            ...item.groups.map(x => ({ ...x, _label: '组合' })),
+            ...item.groups.map(x => ({ ...x, _label: '电机驱动' })),
           ].filter(x => !x.hide)"
           :label="item2._label"
           :title="item2.name">

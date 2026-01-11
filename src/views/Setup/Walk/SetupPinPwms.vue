@@ -9,7 +9,7 @@
     </template>
     <ZNullCell v-if="list.length == 0">没有PWM输出</ZNullCell>
     <van-cell
-      v-for="(item, i) in list.filter(x => !x.builtIn)"
+      v-for="(item, i) in list.filter(x => !x.builtIn && !x.hide)"
       @click="onForm(item)"
       class="group-cell"
       inset
@@ -28,7 +28,7 @@
         </div>
       </template>
     </van-cell>
-    <ZCollapse v-if="list.filter(x => x.builtIn).length > 0">
+    <ZCollapse v-if="list.filter(x => x.builtIn && !x.hide).length > 0">
       <template #title>
         其他
         <van-icon @click.stop="onTip" name="question-o" color="#3498db" />

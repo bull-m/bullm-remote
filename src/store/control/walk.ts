@@ -494,19 +494,19 @@ export const useStore = defineStore(
       // 组
       groups_all.value.forEach(item => {
         if (item.type === '2D1Pwm') {
-          add(item.pwm, `组合(${item.name})使用`)
-          add(item.forward, `组合(${item.name})使用`)
-          add(item.back, `组合(${item.name})使用`)
+          add(item.pwm, `电机驱动(${item.name})使用`)
+          add(item.forward, `电机驱动(${item.name})使用`)
+          add(item.back, `电机驱动(${item.name})使用`)
         } else if (item.type === '2En2Pwm') {
-          add(item.forward_pwm, `组合(${item.name})使用`)
-          add(item.back_pwm, `组合(${item.name})使用`)
-          add(item.forward, `组合(${item.name})使用`)
-          add(item.back, `组合(${item.name})使用`)
+          add(item.forward_pwm, `电机驱动(${item.name})使用`)
+          add(item.back_pwm, `电机驱动(${item.name})使用`)
+          add(item.forward, `电机驱动(${item.name})使用`)
+          add(item.back, `电机驱动(${item.name})使用`)
         } else if (item.type === '2Pwm') {
-          add(item.forward, `组合(${item.name})使用`)
-          add(item.back, `组合(${item.name})使用`)
+          add(item.forward, `电机驱动(${item.name})使用`)
+          add(item.back, `电机驱动(${item.name})使用`)
         } else if (item.type === '1Pwm') {
-          add(item.pwm, `组合(${item.name})使用`)
+          add(item.pwm, `电机驱动(${item.name})使用`)
         }
       })
       const chassis = useStoreChassis()
