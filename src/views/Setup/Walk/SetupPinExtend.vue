@@ -101,14 +101,12 @@
       <ZVanI2C
         required
         colon
-        :disabled="form.builtIn || editMode != -1"
+        :disabled="form.builtIn"
         v-model="form.address"
         name="address"
         label="地址"
         placeholder="选择I2C地址"
         :rules="[{ required: true, message: '请选择设备I2C地址' }]">
-        <template #right-icon v-if="editMode != -1">地址不允许修改</template>
-        <template #right-icon v-else>添加成功后将不允许修改</template>
       </ZVanI2C>
       <van-field
         v-if="form.chip == 'pca9685'"
@@ -178,7 +176,7 @@ const type_extend_map = {
       .fill(1)
       .map((_, i) => ({
         pin: i,
-        func: ['pwm', 'digital'],
+        func: ['pwm', 'digital', 'servo'],
       })),
   },
   motor: {
@@ -280,7 +278,7 @@ function showType() {
 function onForm(item: ExtendType, i: number) {
   showAction.value = true
   editMode.value = i
-  form.value = { ...item }
+  form.value = { ...walkStore.extend[i] }
 }
 
 function onDelect(i: number) {
@@ -300,8 +298,8 @@ function onSubmit() {
   if (editMode.value == -1) {
     if (type_extend_map[form.value.type]) {
       form.value.id = `${generateRandomId(
-        5,
-        walkStore.servos.map(item => item.id)
+        3,
+        walkStore.extend.map(item => item.id)
       )}`
       let json = JSON.stringify(type_extend_map[form.value.type])
       json = json.replace(/&{(\w+)}/g, (match, key) => form.value[key])

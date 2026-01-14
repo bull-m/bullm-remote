@@ -146,7 +146,7 @@ function onSubmit() {
     let id = DeviceId.digital(
       generateRandomId(
         5,
-        walkStore.servos.map(item => item.id)
+        walkStore.digitals.map(item => item.id)
       )
     )
     walkStore.digitals.push({ ...form.value, id })

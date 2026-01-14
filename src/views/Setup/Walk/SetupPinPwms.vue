@@ -199,7 +199,7 @@ function onSubmit() {
     let id = DeviceId.pwm(
       generateRandomId(
         5,
-        walkStore.servos.map(item => item.id)
+        walkStore.pwms.map(item => item.id)
       )
     )
     walkStore.pwms.push({ ...form.value, id })
