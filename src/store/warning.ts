@@ -12,9 +12,13 @@ export const useStore = defineStore(
         count: number
         delay?: number
         timer?: any
+        prefix?: string
       }[]
     >([])
-
+    const prefix = {
+      error: '错误: ',
+      warning: '警告: ',
+    }
     function add(text: string, type: 'error' | 'warning' | 'info' = 'warning', delay = 5000) {
       const timer = setTimeout(() => {
         list.value = list.value.filter(x => x.text !== text)

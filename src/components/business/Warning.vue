@@ -1,7 +1,7 @@
 <template>
   <div class="warning-box">
     <div class="item" :class="item.type" v-for="item in warning.list">
-      <div style="font-weight: bold; margin-right: 3px">{{ prefix[item.type] || '' }}</div>
+      <div style="font-weight: bold; margin-right: 3px" v-if="item.prefix">{{ item.prefix }}</div>
       <div>{{ item.text }}</div>
       <div style="margin-left: 7px" v-if="item.count > 1">x{{ item.count }}</div>
     </div>
@@ -13,10 +13,7 @@ import { useStoreWarning } from '@/store/warning.ts'
 
 const warning = useStoreWarning()
 
-const prefix = {
-  error: '错误: ',
-  warning: '警告: ',
-}
+
 </script>
 
 <style scoped lang="scss">
@@ -27,6 +24,8 @@ const prefix = {
   display: flex;
   flex-direction: column;
   z-index: 100;
+  max-height: 70vh;
+  overflow-y: auto;
   @include row-gap(7px);
 
   .item {
@@ -37,6 +36,7 @@ const prefix = {
     border-radius: 8px;
     font-size: 15px;
     color: #fff;
+    max-width: 50vw;
 
     // 一个从下往上出现的动画
     animation: slide-up 0.2s ease-in-out;
