@@ -1,8 +1,7 @@
 <template>
   <van-field
     autocomplete="off"
-    :model-value="value"
-    @update:model-value="update"
+    v-model="value"
     :label="label"
     v-bind="$attrs"
     :type="type ?? 'digit'"
@@ -20,18 +19,20 @@ defineProps<{
 }>()
 const modelValue = defineModel<number | undefined>('modelValue')
 
-const value = ref<any>(undefined)
-
-function update(_value: string | number) {
-  value.value = _value
-  if (typeof _value === 'number') {
-    modelValue.value = _value
-  } else if (_value.length > 0) {
-    modelValue.value = Number(_value)
-  } else {
-    modelValue.value = undefined
+const value = computed<string | number | undefined>({
+  get(){
+    return modelValue.value
+  },
+  set(v){
+    if (typeof v === 'number') {
+      modelValue.value = v
+    } else if (typeof v === 'string' && v.length > 0) {
+      modelValue.value = Number(v)
+    } else {
+      modelValue.value = undefined
+    }
   }
-}
+})
 </script>
 <style lang="scss" scoped>
 .z-from-switch {
