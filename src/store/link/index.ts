@@ -11,6 +11,7 @@ import TestLink from '@/utils/link/method/TestLink.ts'
 import HotspotLink from '@/utils/link/method/HotspotLink.ts'
 import { itemFromKind } from '@tauri-apps/api/menu/submenu'
 import { ref } from 'vue'
+import { useStoreWarning } from '@/store/warning.ts'
 
 export type CarInfo = {
   mac: string
@@ -255,7 +256,7 @@ export const useStore = defineStore(
             $bus.emit('ws:msg', json)
             if (json.type === 'msg') {
               // 通知
-              showNotify({ type: 'primary', message: '小车：' + json.msg })
+              useStoreWarning().add('小车：' + json.msg, json.msg_type || 'info', json.msg_delay || 5000)
             }
             if (json.type) {
               // 有i属性,回调对应的方法
