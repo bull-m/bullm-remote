@@ -122,7 +122,13 @@ const index = computed(() => {
 
 function onForm(item: DigitalType) {
   showAction.value = true
-  form.value = { ...item }
+  const digital = walkStore.digitals.find(x => x.id === item.id)
+  if (digital){
+    form.value = { ...digital }
+  }else{
+    // TODO 寻找扩展版中的电平输出
+    form.value = { ...item }
+  }
   formRef.value?.resetValidation()
 }
 
@@ -140,6 +146,7 @@ function onDelect(i: number) {
 }
 
 function onSubmit() {
+  // TODO 寻找扩展版中的电平输出
   if (index.value === -1) {
     // 新增
     // 生成id

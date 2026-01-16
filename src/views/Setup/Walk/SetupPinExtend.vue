@@ -91,7 +91,7 @@
       <van-field
         required
         :disabled="form.builtIn"
-        :model-value="type_name_map[form.type]"
+        :model-value="type_name_map_select[form.type]"
         :is-link="!form.builtIn"
         readonly
         name="type"
@@ -106,21 +106,18 @@
         name="address"
         label="地址"
         placeholder="选择I2C地址"
-        :rules="[{ required: true, message: '请选择设备I2C地址' }]">
-      </ZVanI2C>
-      <van-field
+        :rules="[{ required: true, message: '请选择设备I2C地址' }]"/>
+      <ZVanNumber
         v-if="form.chip == 'pca9685'"
         required
         colon
-        type="digit"
         :min="1"
         :max="3500"
-        v-model.trim="form.hz"
+        v-model="form.hz"
         name="picker"
         label="频率"
-        placeholder="1 ~ 3500">
-        <template #right-icon>Hz</template>
-      </van-field>
+        placeholder="1 ~ 3500"
+        right-label="Hz"/>
       <ZFieldBtn
         sticky
         :btns="[
@@ -163,6 +160,12 @@ const showBuiltIn = ref<Record<string, boolean>>({})
 const activeNames = ref(undefined as string | undefined)
 const type_name_map = {
   pwms: 'PWM扩展',
+  motor: '8路电机驱动扩展板',
+  'drive-power': '大功率4路电机扩展',
+  '8relay': '8路继电器扩展板',
+}
+const type_name_map_select = {
+  pwms: 'PWM扩展(PCA9685)',
   motor: '8路电机驱动扩展板',
   'drive-power': '大功率4路电机扩展',
   '8relay': '8路继电器扩展板',
@@ -259,11 +262,11 @@ const form = ref<ExtendType>({ ...def })
 
 function showType() {
   showActionSheet<{
-    value: keyof typeof type_name_map
+    value: keyof typeof type_name_map_select
   }>({
-    actions: Object.keys(type_name_map).map(key => ({
+    actions: Object.keys(type_name_map_select).map(key => ({
       value: key,
-      name: type_name_map[key],
+      name: type_name_map_select[key],
     })) as any,
     teleport: '#SetupWalk',
     cancelText: '取消',
@@ -278,7 +281,11 @@ function showType() {
 function onForm(item: ExtendType, i: number) {
   showAction.value = true
   editMode.value = i
-  form.value = { ...walkStore.extend[i] }
+  if (i === -1) {
+    form.value = { ...item }
+  } else {
+    form.value = { ...walkStore.extend[i] }
+  }
 }
 
 function onDelect(i: number) {

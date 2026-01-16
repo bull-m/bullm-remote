@@ -172,7 +172,13 @@ const hz = computed(() => {
 
 function onForm(item: ServoType) {
   showAction.value = true
-  form.value = { ...item }
+  const pwm = walkStore.pwms.find(x => x.id === item.id)
+  if (pwm){ // 编辑原始数据
+    form.value = { ...pwm }
+  }else{
+    // TODO 寻找扩展版中的pwm输出
+    form.value = { ...item }
+  }
   formRef.value?.resetValidation()
 }
 
@@ -193,6 +199,7 @@ function onSubmit() {
   if (isExtendPwm.value) {
     delete form.value.hz // 扩展版舵机不能设置频率
   }
+  // TODO 寻找扩展版中的PWM
   if (index.value === -1) {
     // 新增
     // 生成id
