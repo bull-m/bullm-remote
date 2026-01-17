@@ -81,7 +81,6 @@
       <van-field
         required
         colon
-        :disabled="form.builtIn"
         :maxlength="10"
         v-model.trim="form.name"
         name="name"

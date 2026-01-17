@@ -16,6 +16,7 @@ import ZVanSwitch from '@/components/form/ZVanSwitch.vue'
 import { useStoreBattery } from '@/store/modules/battery.ts'
 import { GamepadAxes, GamepadAxesDef, GamepadButtons, GamepadButtonsDef, GamepadCurrent, GamepadIsLink } from '@/utils/device/gamepad.ts'
 import { useStoreCar } from '@/store/car.ts'
+import ZNullCell from '@/components/base/ZNullCell.vue'
 
 export { isDigital, isGroup, isPwm, isServo } from '@/store/control/walk.ts'
 
@@ -24,6 +25,7 @@ export const Components = {
   FromNumber: ZVanNumber,
   FromSwitch: ZVanSwitch,
   FromDevice: ZVanDevice,
+  NullCell: ZNullCell,
 }
 export const view = _view
 

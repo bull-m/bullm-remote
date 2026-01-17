@@ -83,17 +83,16 @@ const data = ref({
   has_update: false,
 })
 
-async function init() {
-  data.value = await axios.get(`https://car.bullm.cn/public-api/version/check?version=${getAppVersion()}`).then(res => {
-    return res.data.data
-  })
-  if (data.value.has_compatible || data.value.has_update) {
-    isUpdate.value = true
-  }
-}
-
 onMounted(() => {
-  init()
+  axios
+    .get(`https://car.bullm.cn/public-api/version/check?version=${getAppVersion()}`)
+    .then(res => {
+      data.value = res.data.data
+      if (data.value.has_compatible || data.value.has_update) {
+        isUpdate.value = true
+      }
+    })
+    .catch(() => {})
 })
 
 const openLink = (url: string) => {

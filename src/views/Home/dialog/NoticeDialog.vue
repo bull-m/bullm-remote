@@ -76,17 +76,6 @@ function updateNoticeNum() {
   }
 }
 
-async function init() {
-  // 获取通知数据
-  data.value = await axios.get(`https://car.bullm.cn/public-api/notice/latest?version=${getAppVersion()}`).then(res => {
-    return res.data.data
-  })
-  // 清楚已经不存在的id
-  readNoticeIds.value = readNoticeIds.value.filter(x => data.value.some(({ id }) => id == x))
-  // 更新未读数量
-  updateNoticeNum()
-}
-
 // 标记所有通知为已读
 function markAllAsRead() {
   readNoticeIds.value = data.value.map(x => x.id)
@@ -95,7 +84,17 @@ function markAllAsRead() {
 }
 
 onMounted(() => {
-  init()
+  // 获取通知数据
+  axios
+    .get(`https://car.bullm.cn/public-api/notice/latest?version=${getAppVersion()}`)
+    .then(res => {
+      data.value = res.data.data
+      // 清楚已经不存在的id
+      readNoticeIds.value = readNoticeIds.value.filter(x => data.value.some(({ id }) => id == x))
+      // 更新未读数量
+      updateNoticeNum()
+    })
+    .catch(() => {})
 })
 </script>
 

@@ -173,7 +173,6 @@ function scan() {
   return (scanProm = link
     .scan()
     .then(res => {
-      console.log(res)
       links.value = res.links
       car_all.value = res.cars
     })
@@ -217,6 +216,13 @@ const selectedCar = computed(() => {
       ...car,
       name: star.name || car!.mac,
     }
+  }
+  if (!car) {
+    if (isDetails.value) {
+      showToast('该小车已经断开连接')
+      backDetails()
+    }
+    return {}
   }
   return car
 })

@@ -33,6 +33,7 @@
           </van-cell>
         </template>
       </Draggable>
+      <Components.NullCell v-if="config.list.length === 0" >还没有滑块，添加一个玩玩呗</Components.NullCell>
     </van-cell-group>
     <van-action-sheet v-model:show="showAction" :title="editMode != -1 ? '编辑滑块' : '新增滑块'">
       <van-form ref="formRef" @submit="onSubmit" :submit-on-enter="false">
@@ -45,9 +46,10 @@
           label="名称"
           placeholder="滑块名称(最多10个字符，中文建议两个字符)"
           :rules="[{ required: true, message: '请输入滑块名称' }]" />
-        <Components.FromDevice label="选择设备" v-model="form.device" select-pwm select-servo select-digital select-group />
+        <Components.FromDevice @change="onChangeDevice" label="选择设备" v-model="form.device" select-pwm select-servo select-digital select-group />
         <van-notice-bar v-if="isDigital(form.device)" mode="closeable">电平输出只有两种状态，建议使用开关插件控制</van-notice-bar>
         <Components.FromNumber
+          v-if="form.device"
           label="最小值"
           v-model="form.min"
           :min="minmax[0]"
@@ -56,6 +58,7 @@
           :disabled="isDigital(form.device)"
           :placeholder="`最小值(${minmax[0]})，留空则使用设备的设置`" />
         <Components.FromNumber
+          v-if="form.device"
           label="最大值"
           v-model="form.max"
           :min="minmax[0]"
@@ -63,11 +66,20 @@
           :step="1"
           :disabled="isDigital(form.device)"
           :placeholder="`最大值(${minmax[1]})，留空则使用设备的设置`" />
-        <Components.FromNumber label="步进" v-model="form.step" :min="1" :max="100" :step="1" :placeholder="`留空则使用为1`" />
+        <Components.FromNumber
+          v-if="form.device"
+          label="步进"
+          v-model="form.step"
+          :min="1"
+          :max="100"
+          :step="1"
+          :disabled="isDigital(form.device)"
+          :placeholder="`留空则使用为1`" />
         <Components.FromSwitch label="反转滑块" v-model="form.reverse" />
         <Components.FromSwitch label="只读" v-model="form.readonly" />
+        <Components.FromSwitch v-if="isGroup(form.device)" label="松手自动停止" v-model="form.autostop" />
 
-        <van-notice-bar v-if="(form.min ?? minmax[0]) >= (form.max ?? minmax[1])" color="var(--van-warning-color)">
+        <van-notice-bar v-if="(form.min ?? minmax[0]) > (form.max ?? minmax[1])" color="var(--van-warning-color)">
           最大值应该大于最小值
         </van-notice-bar>
         <ZFieldBtn
@@ -88,7 +100,7 @@
 <script setup lang="ts">
 import { ConfigType, ItemType } from './index.ts'
 import type { FormInstance } from 'vant'
-import { Components, isDigital, isGroup, isPwm, isServo, useConfig, useDigitalInfo } from '@/plugin/export.ts'
+import { Components, isDigital, isGroup, isPwm, isServo, useConfig, useDigitalInfo, useGeneralOutput } from '@/plugin/export.ts'
 import ZFlex from '@/components/base/ZFlex.vue'
 import Draggable from 'vuedraggable'
 
@@ -107,17 +119,9 @@ const form = ref<ItemType>({ ...def })
 
 const minmax = computed(() => {
   const id = form.value.device
-  if (isDigital(id)) {
-    return [0, 1]
-  }
-  if (isPwm(id)) {
-    return [0, 255]
-  }
-  if (isGroup(id)) {
-    return [-255, 255]
-  }
-  if (isServo(id)) {
-    return [0, 180]
+  const info = useGeneralOutput(id)
+  if (info) {
+    return [info.min, info.max]
   }
   return [0, 0]
 })
@@ -126,6 +130,21 @@ function onForm(item: ItemType, i: number) {
   showAction.value = true
   editMode.value = i
   form.value = { ...item }
+}
+
+function onChangeDevice(){
+  if (isDigital(form.value.device)) {
+    form.value.step = undefined
+    form.value.min = undefined
+    form.value.max = undefined
+  }
+  if (typeof form.value.max != 'undefined' && form.value.max > minmax.value[1]) {
+    form.value.max = undefined
+  }
+  if (typeof form.value.min != 'undefined' && form.value.min < minmax.value[0]) {
+    form.value.min = undefined
+  }
+  form.value.autostop = !!isGroup(form.value.device);
 }
 
 function onSubmit() {

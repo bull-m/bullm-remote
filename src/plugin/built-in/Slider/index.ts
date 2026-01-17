@@ -24,14 +24,12 @@ export type ItemType = {
   step?: number
   reverse?: boolean
   readonly?: boolean
+  autostop?: boolean
 }
 
 export function getDefaultConfig() {
   return {
-    list: [
-      { label: 'pwm', step: 1, device: 'p:1' },
-      { label: 'servo', step: 1, device: 's:1' },
-    ] as ItemType[],
+    list: [] as ItemType[],
     direction: 'horizontal' as 'horizontal' | 'vertical',
   }
 }

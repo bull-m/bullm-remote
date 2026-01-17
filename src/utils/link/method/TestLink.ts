@@ -1,8 +1,4 @@
-import Http from '@/utils/car/http.ts'
 import { CarInfo, LinkInstanceType, LinkUtilType } from '@/store/link'
-import { isBlob } from '@/utils'
-import $bus from '@/utils/bus.ts'
-import { newMenu } from '@tauri-apps/api/menu/base'
 import { OPTIONS } from '@/constants'
 
 type LinkOption = {}

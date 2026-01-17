@@ -39,6 +39,7 @@ SPDX-License-Identifier: MIT
     </van-cell-group>
 
     <van-cell-group inset title="其他">
+      <z-van-cell title="重启小车" is-link inset @click="onCarSystemRestart" />
       <z-van-cell title="配置导入导出" is-link inset @click="switchComponent('SetupOptions')" />
     </van-cell-group>
     <van-cell-group inset title="文档">
@@ -49,7 +50,7 @@ SPDX-License-Identifier: MIT
 </template>
 
 <script setup lang="ts">
-import { LinkOption, useStoreLink } from '@/store/link'
+import { CarInfo, LinkOption, useStoreLink } from '@/store/link'
 import ZPopupSetup from '@/components/base/ZPopupSetup.vue'
 import MoreInfo from './MoreInfo.vue'
 import { isSameLinkOption } from '@/utils/link'
@@ -58,6 +59,7 @@ import { debugAutoOpenSetupModel } from '@/views/debug.ts'
 import { useStoreUi } from '@/store/ui.ts'
 import { useStoreWalk } from '@/store/control/walk.ts'
 import { useStoreChassis } from '@/store/modules/chassis.ts'
+import Http from '@/utils/car/http.ts'
 
 const link = useStoreLink()
 const ui = useStoreUi()
@@ -125,6 +127,24 @@ function onShowIpDetail(item: LinkOption) {
     message: `要切换到这个连接通道吗？`,
   }).then(() => {
     link.connectCar(link.connect.info!.mac, item)
+  })
+}
+
+function onCarSystemRestart() {
+  showConfirmDialog({
+    title: '提示',
+    message: '即将重启小车',
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+  }).then(() => {
+    if (!link.connectIp) return Promise.reject()
+    return Http.get(`http://${link.connectIp}/api/system/restart`, {
+      timeout: 500,
+      params: { token: (link.connect.linkOption as any)?.token ?? undefined },
+    })
+  }).then(()=>{
+    showToast('重启小车成功，请等待小车启动后重新连接')
+    link.close()
   })
 }
 

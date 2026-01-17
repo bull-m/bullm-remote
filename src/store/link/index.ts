@@ -2,14 +2,11 @@
 import { defineStore } from 'pinia'
 import { store } from '../index.ts'
 import $bus from '@/utils/bus.ts'
-import { isBlob } from '@/utils'
 import { useStoreCar } from '@/store/car.ts'
-import Http from '@/utils/car/http.ts'
 import { initCommunication, monitorWsById } from '@/utils/car/message.ts'
 import WsLink from '@/utils/link/method/WsLink.ts'
 import TestLink from '@/utils/link/method/TestLink.ts'
 import HotspotLink from '@/utils/link/method/HotspotLink.ts'
-import { itemFromKind } from '@tauri-apps/api/menu/submenu'
 import { ref } from 'vue'
 import { useStoreWarning } from '@/store/warning.ts'
 
@@ -256,7 +253,7 @@ export const useStore = defineStore(
             $bus.emit('ws:msg', json)
             if (json.type === 'msg') {
               // 通知
-              useStoreWarning().add('小车：' + json.msg, json.msg_type || 'info', json.msg_delay || 5000)
+              useStoreWarning().add(json.msg, json.msg_type || 'info', json.msg_delay || 5000)
             }
             if (json.type) {
               // 有i属性,回调对应的方法

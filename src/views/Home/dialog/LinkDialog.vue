@@ -57,7 +57,6 @@
 </template>
 
 <script setup lang="ts">
-import Http from '@/utils/car/http.ts'
 import { LinkOption, useStoreLink } from '@/store/link'
 import { validatorIp } from '@/utils'
 import { AP_MODE_IP } from '@/constants'

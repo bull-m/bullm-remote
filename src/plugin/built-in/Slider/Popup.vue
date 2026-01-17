@@ -24,9 +24,16 @@
 </template>
 
 <script setup lang="ts">
-import { isGroup, isServo, useConfig, useDigitalInfo, useGeneralOutput, useGroupInfo, usePwmInfo, useServoInfo, useWalk } from '@/plugin/export.ts'
-import { PREFIX } from '@/constants'
+import {
+  isGroup,
+  isServo,
+  useConfig,
+  useGeneralOutput,
+  usePlugin,
+  useWalk,
+} from '@/plugin/export.ts'
 import { ConfigType } from './index.ts'
+import $bus from '@/utils/bus.ts'
 
 const { auto } = useWalk()
 
@@ -65,10 +72,25 @@ function onLabel(item: any) {
 
 function change(item: any) {
   // 组合需要归零
-  if (isGroup(item.device)) {
-    auto(item.device, 0) // 关闭舵机
+  if (isGroup(item.device) && item.autostop) {
+    auto(item.device, 0) // 停止
   }
 }
+
+function autostop() {
+  slider.value.forEach(item => {
+    if (isGroup(item.device) && item.autostop && item.state != 0) {
+      auto(item.device, 0) // 停止
+    }
+  })
+}
+
+$bus.on('window:blur', autostop)
+
+onUnmounted(() => {
+  $bus.off('window:blur', autostop)
+  autostop()
+})
 </script>
 
 <style scoped lang="scss">
