@@ -126,17 +126,15 @@ export const useStore = defineStore(
           }
           dog_error++
           if (dog_error > 3) {
-            stop() // 停掉相机
             dog_error = 0
-            showConfirmDialog({
-              title: '错误',
-              message:
-                '已经尝试重启相机三次，还没有收到视频流，请检查网络和相机是否正常工作。（视频流使用UDP协议，需要确保小车能连接到你的控制设备）',
-              confirmButtonText: '重启小车',
-              cancelButtonText: '取消',
-            }).then(() => {
-              // TODO 重启小车
-              stop().then(() => setTimeout(start, 1000))
+            stop().then(() => {
+              return showConfirmDialog({
+                title: '相机错误',
+                message:
+                  '已经尝试重启相机三次，还没有收到视频流，请检查网络和相机是否正常工作。（视频流使用UDP协议，需要确保小车能连接到你的控制设备）。如果不需要图传请去掉所有图传插件',
+                confirmButtonText: '重试',
+                cancelButtonText: '取消',
+              }).then(start)
             })
             return
           }
