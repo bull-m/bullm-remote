@@ -1,5 +1,5 @@
 <template>
-  <div class="z-tag" :class="type">
+  <div class="z-tag" :class="type + ' ' + size">
     <slot></slot>
   </div>
 </template>
@@ -7,6 +7,7 @@
 <script setup lang="ts">
 defineProps<{
   type?: 'success' | 'info' | 'warn' | 'error'
+  size?: 'small' | 'medium' | 'large'
 }>()
 </script>
 
@@ -33,6 +34,14 @@ defineProps<{
 
   &.error {
     background-color: #e84118;
+  }
+  &.small {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+  &.large {
+    font-size: 16px;
+    padding: 7px 12px;
   }
 }
 </style>

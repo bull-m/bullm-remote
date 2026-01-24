@@ -29,6 +29,7 @@ declare module 'vue' {
     IconSvgLive: typeof import('~icons/svg/live')['default']
     IconSvgLogo: typeof import('~icons/svg/logo')['default']
     IconSvgRefresh: typeof import('~icons/svg/refresh')['default']
+    IconSvgScan: typeof import('~icons/svg/scan')['default']
     IconSvgSetup: typeof import('~icons/svg/setup')['default']
     IconSvgSignal: typeof import('~icons/svg/signal')['default']
     IconSvgSort: typeof import('~icons/svg/sort')['default']

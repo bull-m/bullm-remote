@@ -94,10 +94,10 @@ SPDX-License-Identifier: MIT
             <IconSvgAdd2 />
             <div class="name">添加链接</div>
           </div>
-          <!--          <div class="btn" @click="showScan = true">-->
-          <!--            <IconSvgScan />-->
-          <!--            <div class="name">扫描</div>-->
-          <!--          </div>-->
+          <div class="btn" @click="onScanNetwork">
+            <IconSvgScan />
+            <div class="name">扫描</div>
+          </div>
           <div class="btn" @click="showAppSetup = true">
             <IconSvgSetup />
             <div class="name">全局设置</div>
@@ -113,7 +113,6 @@ SPDX-License-Identifier: MIT
     </div>
     <CarDetails class="main" v-else :car="selectedCar!" @setup="setupCar(selectedCar!)" :scan="scan" @back="backDetails" />
 
-    <ScanDialog v-model:show="showScan" />
     <NoticeDialog v-model:show="showNotice" v-model:notice-num="noticeNum" />
     <UpdateDialog v-model:show="showUpdate" v-model:is-update="isUpdate" />
     <!--   是的，我们根据MIT许可证许可，我们允许你进行商用，但是我们希望您在商用或者修改我们软件的时候不要删除我们的名字，谢谢❤️   -->
@@ -128,7 +127,6 @@ import { openDialog } from '@/utils/ui/dialog.ts'
 import AppInfoDialog from '@/views/Home/dialog/AppInfoDialog.vue'
 import CarDetails from '@/views/Home/CarDetails.vue'
 import { getCarIcon } from '@/views/Home/utils.ts'
-import ScanDialog from '@/views/Home/dialog/ScanDialog.vue'
 import UpdateDialog from '@/views/Home/dialog/UpdateDialog.vue'
 import NoticeDialog from '@/views/Home/dialog/NoticeDialog.vue'
 import { isMobile, startDragging } from '@/utils/system/os.ts'
@@ -222,7 +220,6 @@ const selectedCar = computed(() => {
       showToast('该小车已经断开连接')
       backDetails()
     }
-    return {}
   }
   return car
 })
@@ -284,6 +281,15 @@ function onLinkClick(link?: LinkOption) {
   }
   openDialog(() => import('@/views/Home/dialog/LinkDialog.vue'), {
     link: link,
+    isEdit: link !== undefined,
+    onSubmit: () => {
+      onScanCar()
+    },
+  })
+}
+
+function onScanNetwork() {
+  openDialog(() => import('@/views/Home/dialog/ScanDialog.vue'), {
     onSubmit: () => {
       onScanCar()
     },

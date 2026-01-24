@@ -40,7 +40,7 @@ async function initUdp() {
   // 初始化udp
   await invoke('bind', {
     bindAt: UdpBindAt,
-    broadcast: false,
+    broadcast: true,
   })
     .then(() => {
       isInit = true
@@ -62,7 +62,6 @@ async function initUdp() {
   reset()
   unlisten && unlisten()
   unlisten = await listen('plugin://udp', x => {
-    // TODO 检查ip是否是连接的ip
     let arr = (x.payload as any).data as number[]
     // 检查数据有效性
     if (!arr || arr.length === 0) return

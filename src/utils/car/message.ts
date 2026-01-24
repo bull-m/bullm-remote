@@ -22,17 +22,9 @@ export function initCommunication() {
 }
 
 let seq = 0
-/**
- * UDP发送数据
- * @param data
- */
-export async function UdpSend(data: Array<number> | Object | string) {
+
+export async function UdpSendByIp(ip: string, data: Array<number> | Object | string) {
   if (framework() !== FrameworkTauri) return
-  const { connectIp } = useStoreLink()
-  if (!connectIp) {
-    console.log('没有连接的小车')
-    return
-  }
   if (Array.isArray(data)) {
     if (data.length > 536) {
       throw new Error('数据长度过长')
@@ -47,7 +39,7 @@ export async function UdpSend(data: Array<number> | Object | string) {
     new_data = [...new_data, new_data.reduce((acc, cur) => (acc + cur) & 0xff, 0)]
     await invoke('send', {
       id: UdpBindAt,
-      target: connectIp,
+      target: ip,
       message: new Uint8Array(new_data),
     })
     return
@@ -57,9 +49,21 @@ export async function UdpSend(data: Array<number> | Object | string) {
   }
   await invoke('send_str', {
     id: UdpBindAt,
-    target: connectIp,
+    target: ip,
     message: data,
   })
+}
+/**
+ * UDP发送数据
+ * @param data
+ */
+export async function UdpSend(data: Array<number> | Object | string) {
+  const { connectIp } = useStoreLink()
+  if (!connectIp) {
+    console.log('没有连接的小车')
+    return
+  }
+  await UdpSendByIp(connectIp, data)
 }
 
 /**

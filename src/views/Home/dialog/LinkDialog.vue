@@ -1,11 +1,11 @@
 <template>
-  <ZPopup v-model:show="show" style="width: 300px" :title="props.link ? '编辑连接' : '添加一个连接'">
+  <ZPopup v-model:show="show" style="width: 300px" :title="isEdit ? '编辑连接' : '添加一个连接'">
     <van-tabs style="--van-tabs-nav-background: #00000000" v-model:active="option.type" :before-change="beforeChange">
       <van-tab title="WebSocket" name="ws">
         <template v-if="option.type === 'ws'">
           <van-field
             autocomplete="off"
-            :disabled="loading || !!props.link"
+            :disabled="loading || !!isEdit"
             label-width="2.5em"
             v-model="option.ip"
             label="IP"
@@ -30,11 +30,11 @@
       </van-tab>
     </van-tabs>
     <ZFlex style="margin-top: 12px" v-if="option.type != 'usb'">
-      <van-button v-if="!!props.link" type="danger" class="w-full" style="border-radius: 10px; height: 38px" square @click="onDelect()">
+      <van-button v-if="!!isEdit" type="danger" class="w-full" style="border-radius: 10px; height: 38px" square @click="onDelect()">
         删除
       </van-button>
       <van-button
-        v-if="!props.link && option.type === 'test'"
+        v-if="!isEdit && option.type === 'test'"
         class="w-full"
         style="border-radius: 10px; height: 38px"
         square
@@ -50,7 +50,7 @@
         type="primary"
         @click="onSubmit"
         :loading="loading">
-        测试连通并{{ props.link ? '修改' : '添加' }}
+        测试连通并{{ isEdit ? '修改' : '添加' }}
       </van-button>
     </ZFlex>
   </ZPopup>
@@ -69,20 +69,23 @@ const show = defineModel<boolean>('show')
 
 const props = defineProps<{
   link?: LinkOption
+  isEdit?: boolean
 }>()
 const emit = defineEmits(['submit'])
 
 const option = ref<LinkOption>(props.link ? { ...props.link } : { ip: '', token: '', type: 'ws', name: '' })
 
+const isEdit = computed(() => props.link !== undefined && props.isEdit)
+
 function beforeChange() {
-  return !props.link
+  return isEdit.value
 }
 
 const loading = ref(false)
 const onSubmit = () => {
   console.log(option.value)
   // 是否已经存在
-  if (!props.link && findIndex(option.value) != -1) {
+  if (!isEdit.value && findIndex(option.value) != -1) {
     showToast('已存在, 请勿重复添加')
     return
   }
@@ -114,7 +117,7 @@ const onSubmit = () => {
     loading.value = true
     WsLink.getCarList(option.value)
       .then(res => {
-        if (props.link && props.link.type === 'ws' && props.link.ip) {
+        if (isEdit.value && props.link && props.link.type === 'ws' && props.link.ip) {
           // 修改
           const item = link.linkOptions.find(item => item.type === 'ws' && item.ip === ip)
           if (item && item.type === 'ws') {
