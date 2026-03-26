@@ -26,9 +26,9 @@ SPDX-License-Identifier: MIT
       </div>
       <Titlebar v-if="!isMobile()" />
     </div>
-    <div class="main" v-if="!isDetails">
+    <div class="main" v-show="!isDetails">
       <div class="content">
-        <div class="list">
+        <ZHorizontalScroll class="list">
           <template v-for="(car, i) in [...car_star, ...car_order]" :key="i">
             <div class="item" :class="{ 'view-transition': car.mac === selectedCar?.mac }" @click="onCarClick(car)">
               <div class="icon">
@@ -71,7 +71,7 @@ SPDX-License-Identifier: MIT
               style="--van-empty-description-color: #eee"
               image-size="90" />
           </div>
-        </div>
+        </ZHorizontalScroll>
         <div class="links">
           <div style="margin-bottom: 5px; color: #fff">连接通道</div>
           <div class="link" v-for="(link, i) in links" :key="i" @click="onLinkClick(link.linkOption)">
@@ -111,7 +111,7 @@ SPDX-License-Identifier: MIT
       <AppInfoDialog v-model:show="showAppInfo" />
       <AppSetupDialog v-model:show="showAppSetup" />
     </div>
-    <CarDetails class="main" v-else :car="selectedCar!" @setup="setupCar(selectedCar!)" :scan="scan" @back="backDetails" />
+    <CarDetails class="main" v-if="isDetails" :car="selectedCar!" @setup="setupCar(selectedCar!)" :scan="scan" @back="backDetails" />
 
     <NoticeDialog v-model:show="showNotice" v-model:notice-num="noticeNum" />
     <UpdateDialog v-model:show="showUpdate" v-model:is-update="isUpdate" />
@@ -134,6 +134,7 @@ import Titlebar from '@/components/business/Titlebar.vue'
 import { useStoreUi } from '@/store/ui.ts'
 import AppSetupDialog from '@/views/Home/dialog/AppSetupDialog.vue'
 import { startViewTransition } from '@/utils/ui/transition.ts'
+import ZHorizontalScroll from '@/components/base/ZHorizontalScroll.vue'
 
 const link = useStoreLink()
 const ui = useStoreUi()
@@ -448,15 +449,15 @@ watch(
   position: relative;
   height: 100%;
   align-items: center;
-  overflow-y: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  //scroll-behavior: smooth;
   width: calc(100% - 230px);
   mask: linear-gradient(90deg, #fff 96%, #ffffff00 100%);
   @include column-gap(20px);
 
   &::-webkit-scrollbar {
-    //display: none;
-    height: 20px;
-    width: 20px;
+    display: none;
   }
 
   .item {

@@ -77,6 +77,7 @@ declare module 'vue' {
     ZFieldBtn: typeof import('./../components/base/ZFieldBtn.vue')['default']
     ZFlex: typeof import('./../components/base/ZFlex.vue')['default']
     ZFloatingPanel: typeof import('./../components/base/ZFloatingPanel.vue')['default']
+    ZHorizontalScroll: typeof import('./../components/base/ZHorizontalScroll.vue')['default']
     ZIcon: typeof import('./../components/base/ZIcon.vue')['default']
     ZNullCell: typeof import('./../components/base/ZNullCell.vue')['default']
     ZPopover: typeof import('./../components/base/ZPopover.vue')['default']
