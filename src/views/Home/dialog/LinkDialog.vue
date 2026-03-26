@@ -78,7 +78,7 @@ const option = ref<LinkOption>(props.link ? { ...props.link } : { ip: '', token:
 const isEdit = computed(() => props.link !== undefined && props.isEdit)
 
 function beforeChange() {
-  return isEdit.value
+  return !isEdit.value
 }
 
 const loading = ref(false)

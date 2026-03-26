@@ -20,7 +20,7 @@
             <div>纯控制模式</div>
           </div>
         </ZFlex>
-        <div class="links" v-if="car?.links?.length ?? 0 > 0">
+        <div class="links" v-if="isLink">
           <div style="font-size: 13px">连接通道</div>
           <div class="link select-btn" :class="{ is: i === selectIndex }" @click="selectIndex = i" v-for="(line, i) in car?.links">
             {{ line.name }}
@@ -35,7 +35,8 @@
         </div>
 
         <div class="name">
-          <div>{{ car?.name || car?.mac }}</div>
+          <div class="text">{{ car?.name || car?.mac }}</div>
+          <ZTag v-if="isLink">{{ car.version }}</ZTag>
         </div>
       </div>
     </div>
@@ -43,26 +44,26 @@
       <div class="options">
         <div class="option" v-if="!isStar" @click="onStarCar(car)">
           <IconMdiChristmasStarOutline />
-          <div>收藏</div>
+          <span>收藏</span>
         </div>
         <div class="option" v-if="isStar" @click="onNoStarCar(car)">
           <IconMdiChristmasStar />
-          <div>已收藏</div>
+          <span>已收藏</span>
         </div>
         <div class="option" v-if="isStar" @click="setupCar(car)">
           <IconSvgSetup />
-          <div>设置</div>
+          <span>设置</span>
         </div>
         <div class="option" @click="scanCar()">
           <div v-if="scanLoading" style="width: 19.2px; height: 19.2px">
             <van-loading size="16" type="spinner" color="#FFFFFF" />
           </div>
           <IconMdiRefresh v-else />
-          <div>刷新状态</div>
+          <span>刷新状态</span>
         </div>
       </div>
       <div class="btns">
-        <div class="link" v-if="car?.links?.length ?? 0 > 0" @click="onLink">连接 <(￣︶￣)↗[GO!]</div>
+        <div class="link" v-if="isLink" @click="onLink">连接 <(￣︶￣)↗[GO!]</div>
         <div class="unlink" v-else>离线</div>
       </div>
     </div>
@@ -94,9 +95,15 @@ const isStar = computed(() => {
   return link.star_car.find(x => x.mac === props.car.mac)
 })
 
+const isLink = computed(()=>{
+  return props.car?.links?.length ?? 0 > 0
+})
+
 function setupCar(car: CarType) {
   emit('setup')
 }
+
+function onUpdate() {}
 
 function onLink() {
   // 是否选中连接通道
@@ -144,9 +151,9 @@ function scanCar() {
 }
 
 watch(
-  () => props.car.links,
+  () => props.car?.links,
   () => {
-    if (props.car.links.length) {
+    if (props.car?.links?.length) {
       // 调试自动连接
       if (debugAutoLink) {
         onLink()
@@ -221,7 +228,10 @@ onMounted(() => {
 
       .icon {
         font-size: 20px;
-        margin-right: 5px;
+      }
+
+      span {
+        margin-left: 3px;
       }
     }
   }
@@ -346,7 +356,8 @@ onMounted(() => {
     align-items: center;
     color: #fff;
 
-    div {
+    .text {
+      margin-right: 10px;
       font-size: 20px;
       view-transition-name: detail-name;
     }

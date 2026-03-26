@@ -7,15 +7,18 @@
         <van-switch @update:model-value="default_mac = $event ? props.mac : undefined" :model-value="default_mac == props.mac" />
       </template>
     </van-cell>
-    <div style="display: flex; margin-top: 10px;">
+    <ZFlex style="margin-top: 10px">
+      <van-button v-if="isStar" type="danger" class="w-full" style="border-radius: 10px; height: 38px" square @click="onNoStarCar()">
+        取消收藏
+      </van-button>
       <van-button type="primary" class="w-full" style="height: 38px; border-radius: 10px" square @click="onSubmit">确定</van-button>
-    </div>
+    </ZFlex>
   </ZPopup>
 </template>
 
 <script setup lang="ts">
 import ZPopup from '@/components/base/ZPopup.vue'
-import { useStoreLink } from '@/store/link'
+import { CarInfo, useStoreLink } from '@/store/link'
 
 const props = defineProps({
   mac: String,
@@ -27,6 +30,10 @@ const emit = defineEmits(['submit', 'delect'])
 const show = defineModel<boolean>('show', { default: false })
 
 const link = useStoreLink()
+
+const isStar = computed(() => {
+  return link.star_car.find(x => x.mac === props.mac)
+})
 
 const new_name = ref('')
 const onSubmit = () => {
@@ -48,5 +55,15 @@ function open() {
 function onDelect() {
   emit('delect')
   show.value = false
+}
+
+function onNoStarCar() {
+  showConfirmDialog({
+    title: '要取消收藏吗 ♪(´▽｀)',
+    message: '取消收藏后如果没有通道能连接小车时将不会显示在首页',
+  }).then(() => {
+    link.star_car = link.star_car.filter(x => x.mac !== props.mac)
+    show.value = false
+  })
 }
 </script>

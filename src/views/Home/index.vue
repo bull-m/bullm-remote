@@ -85,7 +85,7 @@ SPDX-License-Identifier: MIT
       </div>
       <div class="bottom">
         <div class="btns">
-          <div class="btn" @click="onScanCar">
+          <div class="btn" @click="onScanCar()">
             <van-loading class="icon" v-if="scanLoading" type="spinner" color="#FFFFFF" />
             <IconSvgRefresh v-else />
             <div class="name">刷新</div>
@@ -133,6 +133,7 @@ import { isMobile, startDragging } from '@/utils/system/os.ts'
 import Titlebar from '@/components/business/Titlebar.vue'
 import { useStoreUi } from '@/store/ui.ts'
 import AppSetupDialog from '@/views/Home/dialog/AppSetupDialog.vue'
+import { startViewTransition } from '@/utils/ui/transition.ts'
 
 const link = useStoreLink()
 const ui = useStoreUi()
@@ -166,8 +167,8 @@ const car_order = computed(() => {
 const scanLoading = ref(false)
 let scanProm: Promise<void> | null
 // 后台扫描
-function scan() {
-  if (scanProm) return scanProm
+function scan(compulsory?: boolean) {
+  if (scanProm && !compulsory) return scanProm
   return (scanProm = link
     .scan()
     .then(res => {
@@ -180,9 +181,10 @@ function scan() {
     }))
 }
 
-function onScanCar() {
+// 带loading动画
+function onScanCar(compulsory?: boolean) {
   scanLoading.value = true
-  return scan()
+  return scan(compulsory)
 }
 
 let scanInterval: any
@@ -192,7 +194,7 @@ onMounted(() => {
     cars: [],
     state: 'error',
   }))
-  onScanCar()
+  onScanCar(true)
   // 轮询扫描
   scanInterval = setInterval(() => {
     if (link.isLink) return // 已经连接了，跳过扫描
@@ -225,26 +227,16 @@ const selectedCar = computed(() => {
 })
 
 function backDetails() {
-  if (document.startViewTransition) {
-    document.startViewTransition(() => {
-      isDetails.value = false
-    })
-  } else {
+  startViewTransition(() => {
     isDetails.value = false
-  }
+  })
 }
 
 function onCarClick(car: CarType, line?: LinkOption) {
   selectMac.value = car.mac
-  if (document.startViewTransition) {
-    nextTick(() => {
-      document.startViewTransition(() => {
-        isDetails.value = true
-      })
-    })
-  } else {
+  startViewTransition(() => {
     isDetails.value = true
-  }
+  })
 }
 
 function onAddLink() {
@@ -283,7 +275,7 @@ function onLinkClick(link?: LinkOption) {
     link: link,
     isEdit: link !== undefined,
     onSubmit: () => {
-      onScanCar()
+      onScanCar(true)
     },
   })
 }
@@ -291,7 +283,7 @@ function onLinkClick(link?: LinkOption) {
 function onScanNetwork() {
   openDialog(() => import('@/views/Home/dialog/ScanDialog.vue'), {
     onSubmit: () => {
-      onScanCar()
+      onScanCar(true)
     },
   })
 }
@@ -462,7 +454,9 @@ watch(
   @include column-gap(20px);
 
   &::-webkit-scrollbar {
-    display: none;
+    //display: none;
+    height: 20px;
+    width: 20px;
   }
 
   .item {

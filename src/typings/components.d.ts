@@ -12,6 +12,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     IconMdiArrowBack: typeof import('~icons/mdi/arrow-back')['default']
+    IconMdiCar: typeof import('~icons/mdi/car')['default']
+    IconMdiCarHatchback: typeof import('~icons/mdi/car-hatchback')['default']
     IconMdiChristmasStar: typeof import('~icons/mdi/christmas-star')['default']
     IconMdiChristmasStarOutline: typeof import('~icons/mdi/christmas-star-outline')['default']
     IconMdiInformationVariantCircleOutline: typeof import('~icons/mdi/information-variant-circle-outline')['default']
