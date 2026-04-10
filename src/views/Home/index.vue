@@ -28,7 +28,7 @@ SPDX-License-Identifier: MIT
     </div>
     <div class="main" v-show="!isDetails">
       <div class="content">
-        <ZHorizontalScroll class="list">
+        <ZHorizontalScroll class="list" enableMouseDrag>
           <template v-for="(car, i) in [...car_star, ...car_order]" :key="i">
             <div class="item" :class="{ 'view-transition': car.mac === selectedCar?.mac }" @click="onCarClick(car)">
               <div class="icon">
