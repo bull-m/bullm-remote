@@ -8,13 +8,17 @@
     <div v-if="name ?? options?.name" class="icon-item-name" :style="{ color: nameColor }">
       {{ name ?? options?.name }}
     </div>
+    <!-- 当name和icon为空时，显示info?.name -->
+    <div v-if="isNameIconEmpty" class="icon-item-name">
+      {{ options?.info?.name }} 
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useOptions } from '@/plugin/export.ts'
 
-defineProps({
+const props = defineProps({
   icon: {
     type: String,
     required: false,
@@ -34,12 +38,17 @@ defineProps({
 })
 
 const options = useOptions()
+
+const isNameIconEmpty = computed(() => {
+  return !props.name && !props.icon && !options?.icon && !options?.name
+})
+
 </script>
 
 <style scoped lang="scss">
 .icon-view {
   width: var(--side-width);
-  height: var(--side-width);
+  height: calc(var(--side-width) * 1.1);
   //background: rgba(2, 2, 2, 0.7);
   border-radius: 8px;
   display: flex;
@@ -65,17 +74,18 @@ const options = useOptions()
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 20px;
 
     img {
-      max-width: 40%;
-      max-height: 40%;
+      max-width: 43%;
+      max-height: 43%;
       object-fit: contain;
+      display: block;
     }
   }
 
   .icon-item-name {
-    font-size: 14px;
+    font-size: 15px;
     text-align: center;
     display: flex;
     align-items: center;
@@ -83,6 +93,7 @@ const options = useOptions()
     padding: 0 5px;
     word-break: break-word;
     line-height: 1.2;
+    display: block;
     //text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
     text-shadow:
       0 0 10px rgba(0, 0, 0, 0.6),
@@ -104,13 +115,14 @@ const options = useOptions()
   .icon-item-icon {
     flex: none;
     margin-right: 5px;
+    font-size: 18px;
   }
 
   .icon-item-name {
     flex: none;
     height: auto;
     text-align: left;
-    font-size: 16px;
+    font-size: 17px;
     padding: 0;
   }
 }

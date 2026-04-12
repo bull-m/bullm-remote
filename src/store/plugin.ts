@@ -88,8 +88,8 @@ export const useStore = defineStore(
             ...item,
             config: item.config,
             position: item.position,
-            name: item.name || info.name, // 没有自定义名称就用插件名称
-            icon: item.icon || info.btnIcon,
+            name: item.name ?? info.name, // 没有自定义名称就用插件名称
+            icon: item.icon ?? info.btnIcon,
             info: Object.freeze(info),
           }
         })
@@ -117,8 +117,8 @@ export const useStore = defineStore(
           icon: plugin?.icon,
           popup: plugin?.popup,
           setup: plugin?.setup,
-          useDevices: plugin.getUseDevices?.(optionRef.value.config) || [], // 使用了的设备
-          configView: plugin.getConfigView?.(optionRef.value.config),
+          useDevices: [], // 使用了的设备
+          configView: [],
           showPopup: false,
           plugin: plugin, // 插件对象
           options: optionRef.value, // 插件配置
@@ -133,7 +133,7 @@ export const useStore = defineStore(
               result.configView = plugin.getConfigView?.(value.config)
               savePlugin()
             },
-            { deep: true }
+            { deep: true, immediate: true }
           )
         )
         return result

@@ -21,7 +21,7 @@
       <template #item="{ element: item }: { element: PluginRunType }">
         <van-cell-group class="list-item" inset style="margin-top: 10px" v-if="activeFilter === 'all' || item.info.type === activeFilter">
           <van-cell
-            :title="item.options.name"
+            :title="item.options.name || item.options.info?.name"
             inset
             @click="openSetup(item.id, item.options.name)"
             is-link
