@@ -13,10 +13,10 @@ import { useStoreCamera } from '@/store/modules/camera.ts'
 import ZVanNumber from '@/components/form/ZVanNumber.vue'
 import { PREFIX } from '@/constants'
 import ZVanSwitch from '@/components/form/ZVanSwitch.vue'
-import { useStoreBattery } from '@/store/modules/battery.ts'
 import { GamepadAxes, GamepadAxesDef, GamepadButtons, GamepadButtonsDef, GamepadCurrent, GamepadIsLink } from '@/utils/device/gamepad.ts'
 import { useStoreCar } from '@/store/car.ts'
 import ZNullCell from '@/components/base/ZNullCell.vue'
+import { useStoreSensor } from '@/store/sensor/index.ts'
 
 export { isDigital, isGroup, isPwm, isServo } from '@/store/control/walk.ts'
 
@@ -164,15 +164,6 @@ export function useCamera() {
   }
 }
 
-export function useBattery() {
-  const battery = useStoreBattery()
-  const voltage = computed(() => battery.voltage) // 需要用computed包装一下，使其变成响应式数据
-  return reactive({
-    voltage: voltage,
-    getBattery: battery.getBattery,
-  })
-}
-
 export function useUi() {
   return useStoreUi()
 }
@@ -190,5 +181,20 @@ export function useGamepad() {
     axes: computed(() => (car.isDisableControl ? GamepadAxesDef : GamepadAxes.value)),
     isLink: GamepadIsLink,
     current: GamepadCurrent,
+  })
+}
+
+
+// 传感器
+export function useSensor(id: string) {
+  const sensor = useStoreSensor()
+  const item = sensor.options.find(x => x.id === id)
+  const values = computed(() => sensor.sensors[id] || [])  // 需要用computed包装一下，使其变成响应式数据
+  return reactive({
+    id: item.id,
+    name: item.name,
+    type: item.type,
+    values: values,
+    refresh: () => sensor.refreshSensor(id),
   })
 }

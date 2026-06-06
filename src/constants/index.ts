@@ -21,6 +21,7 @@ export const OPTIONS = {
   NETWORK: 'network', // 互联网配置
   TOKEN: 'token', // 密码
   BATTERY: 'battery',
+  SENSORS: 'sensors',
 } as const
 
 export const AP_MODE_IP = '1.2.1.1'

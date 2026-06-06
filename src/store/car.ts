@@ -13,7 +13,7 @@ import $bus from '@/utils/bus.ts'
 import { useStoreLink } from '@/store/link'
 import { useStoreUdp } from '@/store/link/udp.ts'
 import { useStorePZT } from '@/store/modules/pzt.ts'
-import { useStoreBattery } from '@/store/modules/battery.ts'
+import { useStoreSensor } from '@/store/sensor'
 
 export const useStore = defineStore(
   'car',
@@ -48,12 +48,12 @@ export const useStore = defineStore(
         useStoreUdp().init,
         useStoreUi().init, // 初始化UI
         useStoreWalk().init, // 初始化运动
+        useStoreSensor().init, // 初始化传感器
         useStoreChassis().init, // 初始化底盘
         useStorePZT().init, // 初始化云台
         useStorePlugin().init, // 初始化插件
         useStoreCamera().init, // 初始化相机
         useStoreScreen().init, // 初始化屏幕
-        useStoreBattery().init, // 初始化电池
         useStoreI2C().init, // 初始化I2C
         useStoreDog().init, // 初始化狗狗 ♪(´▽｀)
       ])
@@ -63,12 +63,12 @@ export const useStore = defineStore(
       useStoreUdp().clear()
       useStoreUi().clear()
       useStoreWalk().clear()
+      useStoreSensor().clear()
       useStoreChassis().clear()
       useStorePZT().clear()
       useStorePlugin().clear()
       useStoreCamera().clear()
       useStoreScreen().clear()
-      useStoreBattery().clear()
       useStoreI2C().clear()
       useStoreDog().clear()
     }

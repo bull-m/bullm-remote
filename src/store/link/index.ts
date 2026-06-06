@@ -256,7 +256,7 @@ export const useStore = defineStore(
               useStoreWarning().add(json.msg, json.msg_type || 'info', json.msg_delay || 5000)
             }
             if (json.type) {
-              // 有i属性,回调对应的方法
+              // 有type属性,回调对应的方法
               $bus.emit('ws:msg:' + json.type, json)
             }
             if (json.i) {

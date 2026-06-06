@@ -13,7 +13,7 @@
           <van-tag type="danger" size="large" v-else>{{ batteryPercent + '%' }}</van-tag>
         </template>
       </van-cell>
-      <van-cell title="实时电压" :value="battery.voltage + 'V'" />
+      <van-cell title="实时电压" :value="voltage + 'V'" />
       <van-cell title="电池类型" :value="type" />
       <van-cell>
         <template #title>
@@ -25,19 +25,21 @@
 </template>
 
 <script setup lang="ts">
-import { useBattery } from '@/plugin/export.ts'
+import { useSensor } from '@/plugin/export.ts'
 
-const battery = useBattery()
+const sensor = useSensor('power')
+
+const voltage = computed(() => (sensor.values?.[0]?.value || 0) / 1000)
 
 const voltageMapping = {
   '2S': [7.2, 8.4],
   '3S': [10.8, 12.6],
 }
 const type = computed(() => {
-  if (battery.voltage < 6 || battery.voltage > 13) {
+  if (voltage.value < 6 || voltage.value > 13) {
     return 'unknown'
   }
-  return battery.voltage > 8.6 ? '3S' : '2S'
+  return voltage.value > 8.6 ? '3S' : '2S'
 })
 
 const batteryPercent = computed(() => {
@@ -45,13 +47,13 @@ const batteryPercent = computed(() => {
     return -1
   }
   let [low, high] = voltageMapping[type.value]
-  if (battery.voltage > high) {
+  if (voltage.value > high) {
     return 100
   }
-  if (battery.voltage < low) {
+  if (voltage.value < low) {
     return 0
   }
-  return Math.round((((battery.voltage - low) / (high - low)) * 100) / 3) * 3
+  return Math.round((((voltage.value - low) / (high - low)) * 100) / 3) * 3
 })
 
 const loading = ref(false)
@@ -62,10 +64,9 @@ function refresh() {
     return
   }
   loading.value = true
-  battery
-    .getBattery()
+  sensor.refresh()
     .then(res => {
-      showToast('获取电压成功')
+      showToast('更新电压成功')
     })
     .finally(() => {
       loading.value = false

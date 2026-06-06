@@ -25,9 +25,10 @@ SPDX-License-Identifier: MIT
       <MoreInfo />
     </van-cell-group>
 
-    <van-cell-group inset title="运动与插件">
+    <van-cell-group inset title="运动与插件与传感器">
       <z-van-cell title="基础输出" is-link inset @click="switchComponent('SetupWalk')" />
-      <z-van-cell title="插件设置" is-link inset @click="switchComponent('SetupPlugin')" />
+      <z-van-cell title="插件" is-link inset @click="switchComponent('SetupPlugin')" />
+      <z-van-cell title="传感器" is-link inset @click="switchComponent('SetupSensor')" />
     </van-cell-group>
 
     <van-cell-group inset title="模块">
@@ -35,7 +36,6 @@ SPDX-License-Identifier: MIT
       <z-van-cell title="云台设置" is-link inset @click="switchComponent('SetupPanTilt')" />
       <z-van-cell title="相机配置" is-link inset @click="switchComponent('SetupVideo')" />
       <z-van-cell title="屏幕设置" is-link inset @click="switchComponent('SetupScreen')" />
-      <z-van-cell title="电池设置" is-link inset @click="switchComponent('SetupBattery')" />
     </van-cell-group>
 
     <van-cell-group inset title="其他">
@@ -72,11 +72,11 @@ const components = {
   SetupLink: () => import('./Link/index.vue'),
   SetupPlugin: () => import('./Plugin/index.vue'),
   SetupWalk: () => import('./Walk/index.vue'),
+  SetupSensor: () => import('./Sensor/index.vue'),
   SetupVideo: () => import('./Camera/index.vue'),
   SetupScreen: () => import('./Screen/index.vue'),
   SetupChassis: () => import('./Chassis/index.vue'),
   SetupPanTilt: () => import('./PanTilt/index.vue'),
-  SetupBattery: () => import('./Battery/index.vue'),
   SetupOptions: () => import('./Options/index.vue'),
 }
 const component = shallowRef<any>()

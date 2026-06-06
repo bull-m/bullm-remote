@@ -1,11 +1,13 @@
 <template>
-  <Components.IconView :name="battery.voltage.toFixed(1) + 'V'" />
+  <Components.IconView :name="voltage.toFixed(1) + 'V'" />
 </template>
 
 <script setup lang="ts">
-import { Components, useBattery } from '@/plugin/export.ts'
+import { Components, useSensor } from '@/plugin/export.ts'
 
-const battery = useBattery()
-</script>
+const sensor = useSensor('power')
+
+const voltage = computed(() => (sensor.values?.[0]?.value || 0) / 1000)
+ </script>
 
 <style lang="scss" scoped></style>
