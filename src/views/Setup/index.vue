@@ -136,16 +136,18 @@ function onCarSystemRestart() {
     message: '即将重启小车',
     confirmButtonText: '确定',
     cancelButtonText: '取消',
-  }).then(() => {
-    if (!link.connectIp) return Promise.reject()
-    return Http.get(`http://${link.connectIp}/api/system/restart`, {
-      timeout: 500,
-      params: { token: (link.connect.linkOption as any)?.token ?? undefined },
-    })
-  }).then(()=>{
-    showToast('重启小车成功，请等待小车启动后重新连接')
-    link.close()
   })
+    .then(() => {
+      if (!link.connectIp) return Promise.reject()
+      return Http.get(`http://${link.connectIp}/api/system/restart`, {
+        timeout: 500,
+        params: { token: (link.connect.linkOption as any)?.token ?? undefined },
+      })
+    })
+    .then(() => {
+      showToast('重启小车成功，请等待小车启动后重新连接')
+      link.close()
+    })
 }
 
 onMounted(() => {

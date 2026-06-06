@@ -39,7 +39,7 @@ export const useStore = defineStore(
     ;(window as any).androidBackCallback = () => {
       if (routes.value.length) {
         routes.value.pop()?.()
-      }else{
+      } else {
         return 'exit' // 没有路由，退出
       }
     }
@@ -50,12 +50,15 @@ export const useStore = defineStore(
       zoom,
       val => {
         zoom.value = Math.min(Math.max(val, 0.5), 3)
-        if (framework() === FrameworkWeb){ // web环境
+        if (framework() === FrameworkWeb) {
+          // web环境
           document.documentElement.style.zoom = `${val}` // 保底缩放方法
-        }else if (platform() === 'android') { // 安卓
+        } else if (platform() === 'android') {
+          // 安卓
           // 设置缩放比例为100%（原始大小）
           ;(window as any).AndroidWebView.setScale(window.devicePixelRatio * zoom.value * 100)
-        } else { // 其他
+        } else {
+          // 其他
           // Android：不支持。
           // macOS：仅适用于macOS 11+。
           // iOS：仅适用于iOS 14+。

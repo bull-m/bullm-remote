@@ -147,7 +147,7 @@ onUnmounted(() => {
       display: flex;
       align-items: center;
       cursor: pointer;
-      .icon{
+      .icon {
         margin-left: 3px;
       }
     }

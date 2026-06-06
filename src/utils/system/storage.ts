@@ -29,7 +29,6 @@ export function StorageRemoveItem(key: string) {
   localStorage.removeItem(prefix + key)
 }
 
-
 /**
  * 高级存储
  * @param key
@@ -41,7 +40,6 @@ export function PlusStorage(key: string) {
   }
   return new IndexedDBStorage(key)
 }
-
 
 // IndexedDB 实现的存储类
 class IndexedDBStorage {
@@ -59,19 +57,19 @@ class IndexedDBStorage {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, 1)
 
-      request.onupgradeneeded = (event) => {
+      request.onupgradeneeded = event => {
         const db = (event.target as IDBOpenDBRequest).result
         if (!db.objectStoreNames.contains(this.storeName)) {
           db.createObjectStore(this.storeName)
         }
       }
 
-      request.onsuccess = (event) => {
+      request.onsuccess = event => {
         this.db = (event.target as IDBOpenDBRequest).result
         resolve()
       }
 
-      request.onerror = (event) => {
+      request.onerror = event => {
         reject((event.target as IDBOpenDBRequest).error)
       }
     })
@@ -95,7 +93,7 @@ class IndexedDBStorage {
         resolve(request.result)
       }
 
-      request.onerror = (event) => {
+      request.onerror = event => {
         reject((event.target as IDBRequest).error)
       }
     })
@@ -118,7 +116,7 @@ class IndexedDBStorage {
         resolve()
       }
 
-      request.onerror = (event) => {
+      request.onerror = event => {
         reject((event.target as IDBRequest).error)
       }
     })
@@ -135,7 +133,7 @@ class IndexedDBStorage {
         resolve(true)
       }
 
-      request.onerror = (event) => {
+      request.onerror = event => {
         reject((event.target as IDBRequest).error)
       }
     })
@@ -152,7 +150,7 @@ class IndexedDBStorage {
         resolve(request.result > 0)
       }
 
-      request.onerror = (event) => {
+      request.onerror = event => {
         reject((event.target as IDBRequest).error)
       }
     })
@@ -169,26 +167,26 @@ class IndexedDBStorage {
         resolve()
       }
 
-      request.onerror = (event) => {
+      request.onerror = event => {
         reject((event.target as IDBRequest).error)
       }
     })
   }
 
   async keys(): Promise<string[]> {
-      const db = await this.getDB()
-      return new Promise((resolve, reject) => {
-        const transaction = db.transaction(this.storeName, 'readonly')
-        const store = transaction.objectStore(this.storeName)
-        const request = store.getAllKeys()
+    const db = await this.getDB()
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(this.storeName, 'readonly')
+      const store = transaction.objectStore(this.storeName)
+      const request = store.getAllKeys()
 
-        request.onsuccess = () => {
-          resolve(request.result as string[])
-        }
+      request.onsuccess = () => {
+        resolve(request.result as string[])
+      }
 
-        request.onerror = (event) => {
-          reject((event.target as IDBRequest).error)
-        }
-      })
+      request.onerror = event => {
+        reject((event.target as IDBRequest).error)
+      }
+    })
   }
 }

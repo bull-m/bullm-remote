@@ -64,7 +64,8 @@ function refresh() {
     return
   }
   loading.value = true
-  sensor.refresh()
+  sensor
+    .refresh()
     .then(res => {
       showToast('更新电压成功')
     })

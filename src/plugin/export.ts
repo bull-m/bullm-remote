@@ -184,12 +184,11 @@ export function useGamepad() {
   })
 }
 
-
 // 传感器
 export function useSensor(id: string) {
   const sensor = useStoreSensor()
   const item = sensor.options.find(x => x.id === id)
-  const values = computed(() => sensor.sensors[id] || [])  // 需要用computed包装一下，使其变成响应式数据
+  const values = computed(() => sensor.sensors[id] || []) // 需要用computed包装一下，使其变成响应式数据
   return reactive({
     id: item.id,
     name: item.name,

@@ -107,7 +107,7 @@ export const useWalkControl = () => {
           mode = CONTROL.BYTE1
         } else if (arr.length === 2) {
           mode = CONTROL.BYTE2
-        } else if (arr.length <= 255){
+        } else if (arr.length <= 255) {
           mode = CONTROL.BYTES // 多字节数据
           arr.unshift(arr.length)
         } else {

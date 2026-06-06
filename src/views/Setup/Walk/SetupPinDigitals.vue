@@ -123,9 +123,9 @@ const index = computed(() => {
 function onForm(item: DigitalType) {
   showAction.value = true
   const digital = walkStore.digitals.find(x => x.id === item.id)
-  if (digital){
+  if (digital) {
     form.value = { ...digital }
-  }else{
+  } else {
     // TODO 寻找扩展版中的电平输出
     form.value = { ...item }
   }

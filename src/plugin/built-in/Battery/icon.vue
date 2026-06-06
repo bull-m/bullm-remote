@@ -8,6 +8,6 @@ import { Components, useSensor } from '@/plugin/export.ts'
 const sensor = useSensor('power')
 
 const voltage = computed(() => (sensor.values?.[0]?.value || 0) / 1000)
- </script>
+</script>
 
 <style lang="scss" scoped></style>

@@ -30,9 +30,7 @@
       </van-tab>
     </van-tabs>
     <ZFlex style="margin-top: 12px" v-if="option.type != 'usb'">
-      <van-button v-if="!!isEdit" type="danger" class="w-full" style="border-radius: 10px; height: 38px" square @click="onDelect()">
-        删除
-      </van-button>
+      <van-button v-if="!!isEdit" type="danger" class="w-full" style="border-radius: 10px; height: 38px" square @click="onDelect()">删除</van-button>
       <van-button
         v-if="!isEdit && option.type === 'test'"
         class="w-full"

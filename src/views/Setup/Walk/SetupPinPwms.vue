@@ -173,9 +173,10 @@ const hz = computed(() => {
 function onForm(item: ServoType) {
   showAction.value = true
   const pwm = walkStore.pwms.find(x => x.id === item.id)
-  if (pwm){ // 编辑原始数据
+  if (pwm) {
+    // 编辑原始数据
     form.value = { ...pwm }
-  }else{
+  } else {
     // TODO 寻找扩展版中的pwm输出
     form.value = { ...item }
   }

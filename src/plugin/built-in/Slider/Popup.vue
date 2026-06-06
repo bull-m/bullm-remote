@@ -24,14 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  isGroup,
-  isServo,
-  useConfig,
-  useGeneralOutput,
-  usePlugin,
-  useWalk,
-} from '@/plugin/export.ts'
+import { isGroup, isServo, useConfig, useGeneralOutput, usePlugin, useWalk } from '@/plugin/export.ts'
 import { ConfigType } from './index.ts'
 import $bus from '@/utils/bus.ts'
 

@@ -10,7 +10,7 @@
     </div>
     <!-- 当name和icon为空时，显示info?.name -->
     <div v-if="isNameIconEmpty" class="icon-item-name">
-      {{ options?.info?.name }} 
+      {{ options?.info?.name }}
     </div>
   </div>
 </template>
@@ -42,7 +42,6 @@ const options = useOptions()
 const isNameIconEmpty = computed(() => {
   return !props.name && !props.icon && !options?.icon && !options?.name
 })
-
 </script>
 
 <style scoped lang="scss">

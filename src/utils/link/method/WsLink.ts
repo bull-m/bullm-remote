@@ -108,7 +108,7 @@ const WsLink: LinkUtilType = {
         } else {
           // 低版本浏览器使用 FileReader
           const reader = new FileReader()
-          reader.onload = (e) => {
+          reader.onload = e => {
             if (!e.target) return
             const uint8Array = new Uint8Array(e.target.result as ArrayBuffer)
             if (uint8Array.byteLength === 0) {

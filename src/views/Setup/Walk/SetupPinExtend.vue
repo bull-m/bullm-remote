@@ -105,7 +105,7 @@
         name="address"
         label="地址"
         placeholder="选择I2C地址"
-        :rules="[{ required: true, message: '请选择设备I2C地址' }]"/>
+        :rules="[{ required: true, message: '请选择设备I2C地址' }]" />
       <ZVanNumber
         v-if="form.chip == 'pca9685'"
         required
@@ -116,7 +116,7 @@
         name="picker"
         label="频率"
         placeholder="1 ~ 3500"
-        right-label="Hz"/>
+        right-label="Hz" />
       <ZFieldBtn
         sticky
         :btns="[

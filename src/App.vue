@@ -68,7 +68,6 @@ function preventMultiTouch(e: TouchEvent) {
   display: flex;
   position: relative;
 }
-
 </style>
 <style lang="scss" scoped>
 .fade-enter-active {

@@ -8,7 +8,7 @@
         </template>
       </van-cell>
     </div>
-    <ZNullCell v-if="existList.length === 0" >持续扫描中，请确保您和小车在同一局域网内</ZNullCell>
+    <ZNullCell v-if="existList.length === 0">持续扫描中，请确保您和小车在同一局域网内</ZNullCell>
     <van-button type="primary" class="w-full" style="height: 38px; border-radius: 10px; margin-top: 20px" square @click="onScan" :loading="loading">
       扫描
     </van-button>
@@ -83,7 +83,7 @@ function onItem(item: { ip: string; mac: string; exist: boolean }) {
     onSubmit: () => {
       emit('submit')
       show.value = false
-    }
+    },
   }).then(() => {
     showToast('为您填充了IP')
   })

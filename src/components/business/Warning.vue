@@ -12,8 +12,6 @@
 import { useStoreWarning } from '@/store/warning.ts'
 
 const warning = useStoreWarning()
-
-
 </script>
 
 <style scoped lang="scss">

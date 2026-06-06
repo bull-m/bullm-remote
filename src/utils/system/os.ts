@@ -9,7 +9,7 @@ export const FrameworkWeb = 'web'
 /**
  * 获取app版本
  */
-export function getAppVersion(){
+export function getAppVersion() {
   return packageJson.version
 }
 
@@ -43,7 +43,7 @@ export function startDragging() {
 /**
  * 最小化
  */
-export function appMinimize(){
+export function appMinimize() {
   if (framework() === FrameworkTauri) {
     const appWindow = getCurrentWindow()
     return appWindow.minimize()
@@ -53,14 +53,14 @@ export function appMinimize(){
 /**
  *
  */
-export function appToggleMaximize(){
+export function appToggleMaximize() {
   if (framework() === FrameworkTauri) {
     const appWindow = getCurrentWindow()
     return appWindow.toggleMaximize()
   }
 }
 
-export function appClose(){
+export function appClose() {
   if (framework() === FrameworkTauri) {
     const appWindow = getCurrentWindow()
     return appWindow.close()

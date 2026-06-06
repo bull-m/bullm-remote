@@ -95,7 +95,7 @@ const isStar = computed(() => {
   return link.star_car.find(x => x.mac === props.car.mac)
 })
 
-const isLink = computed(()=>{
+const isLink = computed(() => {
   return props.car?.links?.length ?? 0 > 0
 })
 

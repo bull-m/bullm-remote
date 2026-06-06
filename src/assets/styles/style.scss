@@ -85,7 +85,6 @@ body {
   user-select: none;
 }
 
-
 // vue
 #app {
   position: relative;
@@ -144,10 +143,11 @@ svg {
   /*font-weight: bold;*/
   /*text-shadow: 0 1px #000, 1px 0 #000, -1px 0 #000, 0 -1px #000;*/
   color: #eeeeee;
-  text-shadow: -0.6px -0.6px 0 #000,
-  0.6px -0.6px 0 #000,
-  -0.6px 0.6px 0 #000,
-  0.6px 0.6px 0 #000;
+  text-shadow:
+    -0.6px -0.6px 0 #000,
+    0.6px -0.6px 0 #000,
+    -0.6px 0.6px 0 #000,
+    0.6px 0.6px 0 #000;
 }
 
 .plugin-btn-text.top {

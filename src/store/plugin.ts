@@ -201,7 +201,7 @@ export const useStore = defineStore(
           return
         }
         let json: PluginSaveType[] = list.value.map(item => fieldsFilter(item.options, 'name', 'icon', 'info', 'config', 'position'))
-        plusStorage.set('plugins_' + connect.info!.mac, json).catch(e=>{
+        plusStorage.set('plugins_' + connect.info!.mac, json).catch(e => {
           console.log(e)
           showToast('保存插件设置失败了')
         })

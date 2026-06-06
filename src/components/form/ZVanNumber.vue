@@ -1,11 +1,5 @@
 <template>
-  <van-field
-    autocomplete="off"
-    v-model="value"
-    :label="label"
-    v-bind="$attrs"
-    :type="type ?? 'digit'"
-    :disabled="disabled">
+  <van-field autocomplete="off" v-model="value" :label="label" v-bind="$attrs" :type="type ?? 'digit'" :disabled="disabled">
     <template #right-icon>{{ rightLabel }}</template>
   </van-field>
 </template>
@@ -20,10 +14,10 @@ defineProps<{
 const modelValue = defineModel<number | undefined>('modelValue')
 
 const value = computed<string | number | undefined>({
-  get(){
+  get() {
     return modelValue.value
   },
-  set(v){
+  set(v) {
     if (typeof v === 'number') {
       modelValue.value = v
     } else if (typeof v === 'string' && v.length > 0) {
@@ -31,7 +25,7 @@ const value = computed<string | number | undefined>({
     } else {
       modelValue.value = undefined
     }
-  }
+  },
 })
 </script>
 <style lang="scss" scoped>

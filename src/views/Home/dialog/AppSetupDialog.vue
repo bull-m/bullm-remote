@@ -8,7 +8,7 @@
           <van-button type="primary" size="small" @click="ui.zoom += 0.1">放大</van-button>
         </ZFlex>
       </van-cell>
-      <van-cell v-if="platform() === 'android'" title="重新加载" is-link @click="refresh"/>
+      <van-cell v-if="platform() === 'android'" title="重新加载" is-link @click="refresh" />
     </van-cell-group>
   </ZPopupSetup>
 </template>
@@ -19,7 +19,7 @@ import { platform } from '@/utils/system/os.ts'
 
 const ui = useStoreUi()
 
-function refresh(){
+function refresh() {
   ;(window as any).AndroidWebView.reload()
 }
 </script>

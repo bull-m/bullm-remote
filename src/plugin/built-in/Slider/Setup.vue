@@ -33,7 +33,7 @@
           </van-cell>
         </template>
       </Draggable>
-      <Components.NullCell v-if="config.list.length === 0" >还没有滑块，添加一个玩玩呗</Components.NullCell>
+      <Components.NullCell v-if="config.list.length === 0">还没有滑块，添加一个玩玩呗</Components.NullCell>
     </van-cell-group>
     <van-action-sheet v-model:show="showAction" :title="editMode != -1 ? '编辑滑块' : '新增滑块'">
       <van-form ref="formRef" @submit="onSubmit" :submit-on-enter="false">
@@ -132,7 +132,7 @@ function onForm(item: ItemType, i: number) {
   form.value = { ...item }
 }
 
-function onChangeDevice(){
+function onChangeDevice() {
   if (isDigital(form.value.device)) {
     form.value.step = undefined
     form.value.min = undefined
@@ -144,7 +144,7 @@ function onChangeDevice(){
   if (typeof form.value.min != 'undefined' && form.value.min < minmax.value[0]) {
     form.value.min = undefined
   }
-  form.value.autostop = !!isGroup(form.value.device);
+  form.value.autostop = !!isGroup(form.value.device)
 }
 
 function onSubmit() {

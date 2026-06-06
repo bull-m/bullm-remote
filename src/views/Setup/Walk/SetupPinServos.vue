@@ -188,9 +188,9 @@ const hz = computed(() => {
 function onForm(item: ServoType) {
   showAction.value = true
   const servo = walkStore.servos.find(x => x.id === item.id)
-  if (servo){
+  if (servo) {
     form.value = { ...servo }
-  }else{
+  } else {
     // TODO 寻找扩展版中的舵机
     form.value = { ...item }
   }
